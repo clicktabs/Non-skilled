@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
             'first_name' => 'Super Admin',
             'last_name' => 'clickTabs',
             'email' => 'superadmin@click-tabs.com',
-            'password' => Hash::make('Q4nKBdquvMIZmaVz')
+            'password' => Hash::make('Q4nKBdQUvMIZma@VznctMequre')
         ]);
 
         User::create(
@@ -31,7 +31,7 @@ class UserSeeder extends Seeder
                 'first_name' => 'Admin',
                 'last_name' => 'clickTabs',
                 'email' => 'admin@click-tabs.com',
-                'password' => Hash::make('Q4nKBdquvWIZmaVz')
+                'password' => Hash::make('Q4nKBdQUvMIZma@VznctMequre')
             ]
         );
     }
