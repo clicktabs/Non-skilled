@@ -24,7 +24,28 @@ use App\Models\Account;
 use App\Models\Pharmacy;
 use App\Models\Physician;
 use App\Models\AideSupervisoryVisit;
+use App\Models\PatientHistory;
+use App\Models\Administrative;
+use App\Models\Demographic;
+use App\Models\Authorization;
+use App\Models\HearingVision;
+use App\Models\CognitiveMoodBehavior;
+use App\Models\Preference;
+use App\Models\EnvironmentCondition;
+use App\Models\FunctionalStatus;
+use App\Models\FunctionalAbilitie;
+use App\Models\BladderBowel;
+use App\Models\ActiveDiagnosis;
+use App\Models\HealthCondition;
+use App\Models\SwallowingNutritional;
+use App\Models\SkinCondition;
+use App\Models\SpecialTreatment;
+use App\Models\PhysicianOrders;
+use App\Models\CMS;
 use App\Models\QaList;
+use App\Models\OasisEDeath;
+use App\Models\OasisERecertification;
+use DB;
 
 class ScheduleCalendar extends Controller
 {
@@ -87,6 +108,13 @@ class ScheduleCalendar extends Controller
         }
 
         return view('scheduling.index', compact('patients', 'employees', 'service_codes', 'payors', 'services', 'tasks','currentDate','previousDate','nextDate'));
+    }
+
+    public function scheduleIndex()
+    {
+        $softDeletedSchedules = Schedule::onlyTrashed()->get();
+
+        return view('scheduling.trash-index', compact('softDeletedSchedules'));
     }
 
     public function getEpisodeDates(Request $request, $patientId) {
@@ -199,7 +227,7 @@ class ScheduleCalendar extends Controller
                 'schedule.*'
             ])
             ->where('schedule.employee_id', $u_id->id)
-            ->where('schedule.scheduling_status', '!=', 'completed')
+            // ->where('schedule.scheduling_status', '!=', 'completed')
             ->where(function($query) {
                 $query->orWhereNull('qa_lists.id')->orWhere('qa_lists.status', '!=', 1);
             })
@@ -243,13 +271,19 @@ class ScheduleCalendar extends Controller
         switch ($schedule->task) {
             case 'Oasis-E-Death(Non-Billable)':
                 return view('Skilled-Agency.oasis-e-dealth');
+
             case 'Oasis-E-Recertification(Billable)':
                 $patient = Patient::where('id', $schedule->patient_id)->first();
-                return view('Skilled-Agency.oasis-e-recertification', compact('patient'));
+                $orf = OasisERecertification::where('schedule_id', $schedule->id)->first();
+
+                return view('Skilled-Agency.oasis-e-recertification', compact('patient','orf'));
+
             case 'Oasis-E-Transfer(Non-Billable)':
                 return view('Skilled-Agency.oasis-e-transfer');
+
             case 'OASIS-E Start of Care':
                 $patient = Patient::where('id', $schedule->patient_id)->first();
+                $patientHistory = PatientHistory::where('schedule_id', $schedule->id)->first();
                 $patientExtraInfo = $patient->extra_info;
                 $race_enc = json_decode($patientExtraInfo->race_ethnicity, true);
                 $patientEthincity = $patient->ethincity;
@@ -269,10 +303,67 @@ class ScheduleCalendar extends Controller
                 $new_goals_addons = Addon::where('name', 'like', 'New Goals%')->where('status', '1')->first();
                 $new_goals = get_sub_addons($new_goals_addons, $companyId);
 
-                setcookie('schedule_id', $data, time() + (86400 * 30), "/");
+                $hearing = HearingVision::where('schedule_id', $schedule->id)->first();
+                $administrative = Administrative::where('schedule_id', $schedule->id)->first();
+                $demographic = Demographic::where('schedule_id', $schedule->id)->first();
+                $cognitive = CognitiveMoodBehavior::where('schedule_id', $schedule->id)->first();
+                $preference = Preference::where('schedule_id', $schedule->id)->first();
+                $functionalStatus = FunctionalStatus::where('schedule_id', $schedule->id)->first();
+                $functionalAbilitie = FunctionalAbilitie::where('schedule_id', $schedule->id)->first();
+                $bladder = BladderBowel::where('schedule_id', $schedule->id)->first();
+                $activeDig = ActiveDiagnosis::where('schedule_id', $schedule->id)->first();
+                $healthCon = HealthCondition::where('schedule_id', $schedule->id)->first();
+                $swallowing = SwallowingNutritional::where('schedule_id', $schedule->id)->first();
+                $skin = SkinCondition::where('schedule_id', $schedule->id)->first();
+                $medication = Medication::where('schedule_id', $schedule->id)->first();
+                $treatment = SpecialTreatment::where('schedule_id', $schedule->id)->first();
+                $physician = PhysicianOrders::where('schedule_id', $schedule->id)->first();
+                $cms = CMS::where('schedule_id', $schedule->id)->first();
 
-                return view('Skilled-Agency.oasis-e-start-of-care', compact('patient','race_enc','ethnicities','source_of_add','patientInsurance','patientAddressInfo',
-                'patientEpisodeTiming','patientTransportation', 'episodeDaterange','medications','schedule','account','inventions','new_goals'))->with('active', 'phistory');
+                setcookie('schedule_id', $data, time() + (86400 * 30), "/");
+                $schedule_id = $data;
+
+                $active = '';
+
+                if (!PatientHistory::where('schedule_id', $schedule->id)->exists()) {
+                    $active = 'phistory';
+                } elseif (!Administrative::where('schedule_id', $schedule->id)->exists()) {
+                    $active = 'admin';
+                } elseif (!Demographic::where('schedule_id', $schedule->id)->exists()) {
+                    $active = 'demographic';
+                } elseif (!HearingVision::where('schedule_id', $schedule->id)->exists()){
+                    $active = 'hearing';
+                } elseif (!CognitiveMoodBehavior::where('schedule_id', $schedule->id)->exists()){
+                    $active = 'cognitive';
+                } elseif (!Preference::where('schedule_id', $schedule->id)->exists()){
+                    $active = 'preference';
+                } elseif (!FunctionalStatus::where('schedule_id', $schedule->id)->exists()){
+                    $active = 'funStatus';
+                } elseif (!FunctionalAbilitie::where('schedule_id', $schedule->id)->exists()){
+                    $active = 'functionalabilitie';
+                } elseif (!BladderBowel::where('schedule_id', $schedule->id)->exists()){
+                    $active = 'bladd';
+                } elseif (!ActiveDiagnosis::where('schedule_id', $schedule->id)->exists()){
+                    $active = 'activeDig';
+                } elseif (!HealthCondition::where('schedule_id', $schedule->id)->exists()){
+                    $active = 'healthcon';
+                } elseif (!SwallowingNutritional::where('schedule_id', $schedule->id)->exists()){
+                    $active = 'swallowing';
+                } elseif (!SkinCondition::where('schedule_id', $schedule->id)->exists()){
+                    $active = 'skin';
+                } elseif (!Medication::where('schedule_id', $schedule->id)->exists()){
+                    $active = 'medication';
+                } elseif (!SpecialTreatment::where('schedule_id', $schedule->id)->exists()){
+                    $active = 'treatment';
+                } elseif (!PhysicianOrders::where('schedule_id', $schedule->id)->exists()){
+                    $active = 'physician';
+                } elseif (!CMS::where('schedule_id', $schedule->id)->exists()){
+                    $active = 'cms';
+                }
+
+
+                return view('Skilled-Agency.oasis-e-start-of-care', compact('schedule_id','patient','patientHistory','administrative','demographic','cognitive','preference','functionalStatus','functionalAbilitie','bladder','activeDig','healthCon','swallowing','skin','medication','treatment','physician','cms','race_enc','ethnicities','source_of_add','patientInsurance','patientAddressInfo',
+                'patientEpisodeTiming','patientTransportation', 'episodeDaterange','medications','schedule','account','inventions','new_goals','hearing'))->with('active', $active);
 
             case 'Skilled Nurse Visit (Billable)':
                 $organization_id = Auth::user()->organization_id;
@@ -345,15 +436,7 @@ class ScheduleCalendar extends Controller
                 return view('Skilled-Agency.nurse-visit-note.index', compact('patient', 'physicians', 'pharmacies','schedule'));
 
             case 'HHA Visit (Billable)':
-                $hhhaData = [];
-                $hhhaData['visitnote'] = Hhavisitnote::where('schedule_id', $data)->first();
-                if (!empty($hhhaData['visitnote'])) {
-                    $hhhaData['hhavisitnote1'] = Hhavisitnote1::where('hhavisitnote1s_id', $hhhaData['visitnote']->id)->first();
-                    $hhhaData['hhavisitnote2'] = Hhavisitnote2::where('hhavisitnote2s_id', $hhhaData['visitnote']->id)->first();
-                    return view('Skilled-Agency.hha-visit-note-edit', compact('data','hhhaData'));
-                } else {
-                    return view('Skilled-Agency.hha-visit-note', compact('data'));
-                }
+                return view('Skilled-Agency.hha-visit-note', compact('data'));
             case 'HHA Supervisory Visit(Non-Billable)':
                 $schedule_id = $schedule->id;
                 $supervisory = AideSupervisoryVisit::where('schedule_id',$schedule_id)->first();
@@ -362,6 +445,165 @@ class ScheduleCalendar extends Controller
                 return redirect()->back()->with('danger', 'Something Went Wrong!!');
         }
     }
+    public function formRecycle($data) {
+        $schedule = Schedule::where('id', $data)->first();
+        if (!$schedule) {
+            return view('schedule_not_found');
+        }
+        switch ($schedule->task) {
+            case 'Oasis-E-Death(Non-Billable)':
+                if ($schedule->scheduling_status == 'completed') {
+                    $forms = OasisEDeath::where('schedule_id', $schedule->id)->get();
+                    return view('Skilled-Agency.recycle', compact('schedule', 'forms'));
+                }else{
+                    return redirect()->back()->with('danger', 'Not Completed Yet!!');
+                }
+            case 'Oasis-E-Recertification(Billable)':
+                if ($schedule->scheduling_status == 'completed') {
+                    $forms = OasisERecertification::where('schedule_id', $schedule->id)->get();
+                    return view('Skilled-Agency.recycle', compact('schedule', 'forms'));
+                }else{
+                    return redirect()->back()->with('danger', 'Not Completed Yet!!');
+                }
+            case 'Oasis-E-Transfer(Non-Billable)':
+                if ($schedule->scheduling_status == 'completed') {
+                    $forms = Etransfer::where('schedule_id', $schedule->id)->get();
+                    return view('Skilled-Agency.recycle', compact('schedule', 'forms'));
+                }else{
+                    return redirect()->back()->with('danger', 'Not Completed Yet!!');
+                }
+            case 'OASIS-E Start of Care':
+                if ($schedule->scheduling_status == 'completed') {
+                    $forms = PatientHistory::where('schedule_id', $schedule->id)->get();
+                    return view('Skilled-Agency.recycle', compact('schedule', 'forms'));
+                }else{
+                    return redirect()->back()->with('danger', 'Not Completed Yet!!');
+                }
+
+            case 'Skilled Nurse Visit (Billable)':
+                if ($schedule->scheduling_status == 'completed') {
+                    $forms = PatientHistory::where('schedule_id', $schedule->id)->get();
+                    return view('Skilled-Agency.recycle', compact('schedule', 'forms'));
+                }else{
+                    return redirect()->back()->with('danger', 'Not Completed Yet!!');
+                }
+
+            case '60-day-summary':
+                if ($schedule->scheduling_status == 'completed') {
+                    $forms = PatientHistory::where('schedule_id', $schedule->id)->get();
+                    return view('Skilled-Agency.recycle', compact('schedule', 'forms'));
+                }else{
+                    return redirect()->back()->with('danger', 'Not Completed Yet!!');
+                }
+
+            case 'Plan Of Care':
+                if ($schedule->scheduling_status == 'completed') {
+                    $forms = PatientHistory::where('schedule_id', $schedule->id)->get();
+                    return view('Skilled-Agency.recycle', compact('schedule', 'forms'));
+                }else{
+                    return redirect()->back()->with('danger', 'Not Completed Yet!!');
+                }
+            case 'Physician Order':
+                if ($schedule->scheduling_status == 'completed') {
+                    $forms = PatientHistory::where('schedule_id', $schedule->id)->get();
+                    return view('Skilled-Agency.recycle', compact('schedule', 'forms'));
+                }else{
+                    return redirect()->back()->with('danger', 'Not Completed Yet!!');
+                }
+
+            case 'Aide Supervisory Visit':
+                if ($schedule->scheduling_status == 'completed') {
+                    $forms = PatientHistory::where('schedule_id', $schedule->id)->get();
+                    return view('Skilled-Agency.recycle', compact('schedule', 'forms'));
+                }else{
+                    return redirect()->back()->with('danger', 'Not Completed Yet!!');
+                }
+
+            case 'LVN/LPN Visit (Billable)':
+                if ($schedule->scheduling_status == 'completed') {
+                    $forms = PatientHistory::where('schedule_id', $schedule->id)->get();
+                    return view('Skilled-Agency.recycle', compact('schedule', 'forms'));
+                }else{
+                    return redirect()->back()->with('danger', 'Not Completed Yet!!');
+                }
+
+            case 'Pediatric Skilled Nursing':
+                if ($schedule->scheduling_status == 'completed') {
+                    $forms = PatientHistory::where('schedule_id', $schedule->id)->get();
+                    return view('Skilled-Agency.recycle', compact('schedule', 'forms'));
+                }else{
+                    return redirect()->back()->with('danger', 'Not Completed Yet!!');
+                }
+
+            case 'Skilled Nurse Visit AM (Billable)':
+                if ($schedule->scheduling_status == 'completed') {
+                    $forms = PatientHistory::where('schedule_id', $schedule->id)->get();
+                    return view('Skilled-Agency.recycle', compact('schedule', 'forms'));
+                }else{
+                    return redirect()->back()->with('danger', 'Not Completed Yet!!');
+                }
+
+            case 'Skilled Nurse Visit PM (Billable)':
+                if ($schedule->scheduling_status == 'completed') {
+                    $forms = PatientHistory::where('schedule_id', $schedule->id)->get();
+                    return view('Skilled-Agency.recycle', compact('schedule', 'forms'));
+                }else{
+                    return redirect()->back()->with('danger', 'Not Completed Yet!!');
+                }
+
+            case 'Skilled Nurse Evaluation':
+                if ($schedule->scheduling_status == 'completed') {
+                    $forms = PatientHistory::where('schedule_id', $schedule->id)->get();
+                    return view('Skilled-Agency.recycle', compact('schedule', 'forms'));
+                }else{
+                    return redirect()->back()->with('danger', 'Not Completed Yet!!');
+                }
+
+            case 'SN Injection':
+                if ($schedule->scheduling_status == 'completed') {
+                    $forms = PatientHistory::where('schedule_id', $schedule->id)->get();
+                    return view('Skilled-Agency.recycle', compact('schedule', 'forms'));
+                }else{
+                    return redirect()->back()->with('danger', 'Not Completed Yet!!');
+                }
+
+            case 'SNV W/ Discharge Summary':
+                if ($schedule->scheduling_status == 'completed') {
+                    $forms = PatientHistory::where('schedule_id', $schedule->id)->get();
+                    return view('Skilled-Agency.recycle', compact('schedule', 'forms'));
+                }else{
+                    return redirect()->back()->with('danger', 'Not Completed Yet!!');
+                }
+
+            case 'HHA Visit (Billable)':
+                if ($schedule->scheduling_status == 'completed') {
+                    $forms = Hhavisitnote::where('schedule_id', $schedule->id)->get();
+                    return view('Skilled-Agency.recycle', compact('schedule', 'forms'));
+                }else{
+                    return redirect()->back()->with('danger', 'Not Completed Yet!!');
+                }
+            case 'HHA Supervisory Visit(Non-Billable)':
+                if ($schedule->scheduling_status == 'completed') {
+                    $forms = PatientHistory::where('schedule_id', $schedule->id)->get();
+                    return view('Skilled-Agency.recycle', compact('schedule', 'forms'));
+                }else{
+                    return redirect()->back()->with('danger', 'Not Completed Yet!!');
+                }
+            default:
+                return redirect()->back()->with('danger', 'Something Went Wrong!!');
+        }
+    }
+
+
+
+    public function recycleData()
+    {
+        dd('hi');
+        // $taskId = $request->taskId;
+        // dd($taskId);
+        // return response()->json($taskId);
+    }
+
 
 
     public function getPatientSchedule(Request $request) {
@@ -554,208 +796,261 @@ class ScheduleCalendar extends Controller
         } else {
             // Handle other cases or provide an error response
         }
-         if($request->schadule_id) {
-             $this->update_function($request, $request->schadule_id);
-             return redirect('/schedule/calendar');
-         } else {
-             $start_date = $request->kt_calendar_datepicker_start_date;
-             $end_date = $request->kt_calendar_datepicker_end_date;
 
-             $start_time = Carbon::parse($request->kt_calendar_datepicker_start_date)->format('H:i:s');
-             $end_time = Carbon::parse($request->kt_calendar_datepicker_end_date)->format('H:i:s');
+        $task_list = config('constant.task_array'); // this is list of all chargable tasks
+        // check if saving task is chragable
+        if(in_array($request->task, $task_list)) {
+            $start_time = Carbon::parse($request->kt_calendar_datepicker_start_date)->format('Y-m-d H:i:s');
+            $end_time = Carbon::parse($request->kt_calendar_datepicker_end_date)->format('Y-m-d H:i:s');
+            
+            // get total difference in minutes
+            $timeDifferenceInMinutes = Carbon::parse($start_time)->diffInMinutes(Carbon::parse($end_time));
+            
+            // 1 unit = 15 mins, thus calculating unit. 
+            // If 60 mins then 4 units, 
+            // if 75 mins then 5 units,
+            // if 65 mins then also 5 units we will consider 
+            $neededUnits = ceil($timeDifferenceInMinutes / 15);
 
-             // Convert dates to DateTime objects
-             $start_date_obj = new DateTime($start_date);
-             $end_date_obj = new DateTime($end_date);
+            // calculate total unused authorized units this parient have
+            $authorizations = Authorization::select(DB::raw("SUM(unused_units) as total_unused_units"))->where('patient_id', $request->patient_id)->first();
 
-             // Calculate the difference between the dates
-             $date_diff = $end_date_obj->diff($start_date_obj);
+            // if user's total unused units are more or equal to what we want to schedule then proceed, otherwise give an error
+            if (!isset($authorizations->total_unused_units) || @$authorizations->total_unused_units < $neededUnits) {
+                $errors[] = "This patient do not have enough authorized units.";
+                return redirect()->back()->withErrors($errors);
+            }
+        }
+        
+        if($request->schadule_id) {
+            $this->update_function($request, $request->schadule_id);
+            return redirect('/schedule/calendar');
+        } else {
+            $start_date = $request->kt_calendar_datepicker_start_date;
+            $end_date = $request->kt_calendar_datepicker_end_date;
 
-             $interval = new DateInterval('P1D'); // Represents a period of 1 day
-             $date_range = new DatePeriod($start_date_obj, $interval, $end_date_obj);
+            $start_time = Carbon::parse($request->kt_calendar_datepicker_start_date)->format('H:i:s');
+            $end_time = Carbon::parse($request->kt_calendar_datepicker_end_date)->format('H:i:s');
 
-             // Check if the difference is greater than or equal to 1 day
-             if ($date_diff->days > 1) {
-                 $sunday_dates = [];
-                 $monday_dates = [];
-                 $tuesday_dates = [];
-                 $wednesday_dates = [];
-                 $thursday_dates = [];
-                 $friday_dates = [];
-                 $saturday_dates = [];
-                 $all_dates = [];
-                 if($request->sun){
-                     $current_date = clone $start_date_obj;
-                     while ($current_date <= $end_date_obj) {
-                         // Check if the current date is a Sunday (weekday = 0 for Sunday)
-                         if ($current_date->format('w') === '0') {
-                             $sunday_dates[] = $current_date->format('Y-m-d');
-                         }
+            // Convert dates to DateTime objects
+            $start_date_obj = new DateTime($start_date);
+            $end_date_obj = new DateTime($end_date);
 
-                         // Increment the current date by 1 day
-                         $current_date->add(new DateInterval('P1D'));
-                     }
-                     $all_dates = array_merge($all_dates, $sunday_dates);
-                 }
-                 if($request->mon){
-                     $current_date = clone $start_date_obj;
-                     while ($current_date <= $end_date_obj) {
-                         // Check if the current date is a Sunday (weekday = 1 for Monday)
-                         if ($current_date->format('w') === '1') {
-                             $monday_dates[] = $current_date->format('Y-m-d');
-                         }
+            // Calculate the difference between the dates
+            $date_diff = $end_date_obj->diff($start_date_obj);
 
-                         // Increment the current date by 1 day
-                         $current_date->add(new DateInterval('P1D'));
-                     }
-                     $all_dates = array_merge($all_dates, $monday_dates);
-                 }
-                 if($request->tue){
-                     $current_date = clone $start_date_obj;
-                     while ($current_date <= $end_date_obj) {
-                         // Check if the current date is a Sunday (weekday = 2 for Tuesday)
-                         if ($current_date->format('w') === '2') {
-                             $tuesday_dates[] = $current_date->format('Y-m-d');
-                         }
+            $interval = new DateInterval('P1D'); // Represents a period of 1 day
+            $date_range = new DatePeriod($start_date_obj, $interval, $end_date_obj);
 
-                         // Increment the current date by 1 day
-                         $current_date->add(new DateInterval('P1D'));
-                     }
-                     $all_dates = array_merge($all_dates, $tuesday_dates);
-                 }
-                 if($request->wed){
-                     $current_date = clone $start_date_obj;
-                     while ($current_date <= $end_date_obj) {
-                         // Check if the current date is a Sunday (weekday = 3 for Wednesday)
-                         if ($current_date->format('w') === '3') {
-                             $tuesday_dates[] = $current_date->format('Y-m-d');
-                         }
-
-                         // Increment the current date by 1 day
-                         $current_date->add(new DateInterval('P1D'));
-                     }
-                     $all_dates = array_merge($all_dates, $tuesday_dates);
-                 }
-                 if($request->thu){
-                     $current_date = clone $start_date_obj;
-                     while ($current_date <= $end_date_obj) {
-                         // Check if the current date is a Sunday (weekday = 4 for Thursday)
-                         if ($current_date->format('w') === '4') {
-                             $thursday_dates[] = $current_date->format('Y-m-d');
-                         }
-
-                         // Increment the current date by 1 day
-                         $current_date->add(new DateInterval('P1D'));
-                     }
-                     $all_dates = array_merge($all_dates, $thursday_dates);
-                 }
-                 if($request->fri){
-                     $current_date = clone $start_date_obj;
-                     while ($current_date <= $end_date_obj) {
-                         // Check if the current date is a Sunday (weekday = 5 for Friday)
-                         if ($current_date->format('w') === '5') {
-                             $friday_dates[] = $current_date->format('Y-m-d');
-                         }
-
-                         // Increment the current date by 1 day
-                         $current_date->add(new DateInterval('P1D'));
-                     }
-                     $all_dates = array_merge($all_dates, $friday_dates);
-                 }
-                 if($request->sat){
-                     $current_date = clone $start_date_obj;
-                     while ($current_date <= $end_date_obj) {
-                         // Check if the current date is a Sunday (weekday = 6 for Saturday)
-                         if ($current_date->format('w') === '6') {
-                             $saturday_dates[] = $current_date->format('Y-m-d');
-                         }
-
-                         // Increment the current date by 1 day
-                         $current_date->add(new DateInterval('P1D'));
-                     }
-                     $all_dates = array_merge($all_dates, $saturday_dates);
-                 }
-
-
-                 if(count($all_dates) > 0) {
-                     foreach($all_dates as $all_date){
-                         $schedule = new Schedule();
-                         $schedule->kt_calendar_datepicker_start_date = $all_date;
-                         $schedule->kt_calendar_datepicker_end_date = $all_date;
-                         $schedule->start_time = $start_time;
-                         $schedule->end_time = $end_time;
-                         $schedule->patient_id = $request->patient_id;
-                         $schedule->mileage_rate = $request->mileage_rate;
-                         $schedule->user_rate  = $request->user_rate;
-                         $schedule->employee_id  = $request->employee_id;
-                         $schedule->task  = $request->task;
-                         $schedule->sc_sub_addon_id  = $request->sc_sub_addon_id;
-                         $schedule->bill_unit_type  = $request->bill_unit_type;
-                         $schedule->pay_unit_type  = $request->pay_unit_type;
-                         $schedule->scheduling_status  = $request->scheduling_status;
-                         $schedule->payor_sub_addon_id  = $request->payor_sub_addon_id;
-                         $schedule->scheduling_notes  = $request->scheduling_notes;
-                         $schedule->organization_id  = $organization_id;
-                         $schedule->created_at = date('Y-m-d H:i:s');
-                         if ($episode) {
-                            $schedule->episode_id  = $episode->id;
+            // Check if the difference is greater than or equal to 1 day
+            if ($date_diff->days > 1) {
+                $sunday_dates = [];
+                $monday_dates = [];
+                $tuesday_dates = [];
+                $wednesday_dates = [];
+                $thursday_dates = [];
+                $friday_dates = [];
+                $saturday_dates = [];
+                $all_dates = [];
+                if($request->sun){
+                    $current_date = clone $start_date_obj;
+                    while ($current_date <= $end_date_obj) {
+                        // Check if the current date is a Sunday (weekday = 0 for Sunday)
+                        if ($current_date->format('w') === '0') {
+                            $sunday_dates[] = $current_date->format('Y-m-d');
                         }
-                         $schedule->save();
-                     }
-                 } else {
-                        $s_date = Carbon::parse($start_date)->format('Y-m-d');
-                        $e_date = Carbon::parse($end_date)->format('Y-m-d');
-                         $schedule = new Schedule();
-                         $schedule->kt_calendar_datepicker_start_date = $s_date;
-                         $schedule->kt_calendar_datepicker_end_date = $e_date;
-                         $schedule->start_time = $start_time;
-                         $schedule->end_time = $end_time;
-                         $schedule->patient_id = $request->patient_id;
-                         $schedule->employee_id  = $request->employee_id;
-                         $schedule->mileage_rate = $request->mileage_rate;
-                         $schedule->user_rate  = $request->user_rate;
-                         $schedule->task  = $request->task;
-                         $schedule->sc_sub_addon_id  = $request->sc_sub_addon_id;
-                         $schedule->bill_unit_type  = $request->bill_unit_type;
-                         $schedule->pay_unit_type  = $request->pay_unit_type;
-                         $schedule->scheduling_status  = $request->scheduling_status;
-                         $schedule->payor_sub_addon_id  = $request->payor_sub_addon_id;
-                         $schedule->scheduling_notes  = $request->scheduling_notes;
-                         $schedule->organization_id  = $organization_id;
-                         $schedule->created_at = date('Y-m-d H:i:s');
-                         if ($episode) {
-                            $schedule->episode_id  = $episode->id;
+
+                        // Increment the current date by 1 day
+                        $current_date->add(new DateInterval('P1D'));
+                    }
+                    $all_dates = array_merge($all_dates, $sunday_dates);
+                }
+                if($request->mon){
+                    $current_date = clone $start_date_obj;
+                    while ($current_date <= $end_date_obj) {
+                        // Check if the current date is a Sunday (weekday = 1 for Monday)
+                        if ($current_date->format('w') === '1') {
+                            $monday_dates[] = $current_date->format('Y-m-d');
                         }
-                         $schedule->save();
-                 }
-                 return redirect('/schedule/calendar');
-             } else {
-                 $schedule = new Schedule();
-                 $schedule->kt_calendar_datepicker_start_date = $start_date;
-                 $schedule->kt_calendar_datepicker_end_date = $end_date;
-                 $schedule->start_time = $start_time;
-                 $schedule->end_time = $end_time;
-                 $schedule->patient_id = $request->patient_id;
-                 $schedule->employee_id  = $request->employee_id;
-                 $schedule->task  = $request->task;
-                 $schedule->sc_sub_addon_id  = $request->sc_sub_addon_id;
-                 $schedule->bill_unit_type  = $request->bill_unit_type;
-                 $schedule->mileage_rate = $request->mileage_rate;
-                 $schedule->user_rate  = $request->user_rate;
-                 $schedule->pay_unit_type  = $request->pay_unit_type;
-                 $schedule->scheduling_status  = $request->scheduling_status;
-                 $schedule->payor_sub_addon_id  = $request->payor_sub_addon_id;
-                 $schedule->scheduling_notes  = $request->scheduling_notes;
-                 $schedule->organization_id  = $organization_id;
-                 $schedule->created_at = date('Y-m-d H:i:s');
-                 if ($episode) {
+
+                        // Increment the current date by 1 day
+                        $current_date->add(new DateInterval('P1D'));
+                    }
+                    $all_dates = array_merge($all_dates, $monday_dates);
+                }
+                if($request->tue){
+                    $current_date = clone $start_date_obj;
+                    while ($current_date <= $end_date_obj) {
+                        // Check if the current date is a Sunday (weekday = 2 for Tuesday)
+                        if ($current_date->format('w') === '2') {
+                            $tuesday_dates[] = $current_date->format('Y-m-d');
+                        }
+
+                        // Increment the current date by 1 day
+                        $current_date->add(new DateInterval('P1D'));
+                    }
+                    $all_dates = array_merge($all_dates, $tuesday_dates);
+                }
+                if($request->wed){
+                    $current_date = clone $start_date_obj;
+                    while ($current_date <= $end_date_obj) {
+                        // Check if the current date is a Sunday (weekday = 3 for Wednesday)
+                        if ($current_date->format('w') === '3') {
+                            $tuesday_dates[] = $current_date->format('Y-m-d');
+                        }
+
+                        // Increment the current date by 1 day
+                        $current_date->add(new DateInterval('P1D'));
+                    }
+                    $all_dates = array_merge($all_dates, $tuesday_dates);
+                }
+                if($request->thu){
+                    $current_date = clone $start_date_obj;
+                    while ($current_date <= $end_date_obj) {
+                        // Check if the current date is a Sunday (weekday = 4 for Thursday)
+                        if ($current_date->format('w') === '4') {
+                            $thursday_dates[] = $current_date->format('Y-m-d');
+                        }
+
+                        // Increment the current date by 1 day
+                        $current_date->add(new DateInterval('P1D'));
+                    }
+                    $all_dates = array_merge($all_dates, $thursday_dates);
+                }
+                if($request->fri){
+                    $current_date = clone $start_date_obj;
+                    while ($current_date <= $end_date_obj) {
+                        // Check if the current date is a Sunday (weekday = 5 for Friday)
+                        if ($current_date->format('w') === '5') {
+                            $friday_dates[] = $current_date->format('Y-m-d');
+                        }
+
+                        // Increment the current date by 1 day
+                        $current_date->add(new DateInterval('P1D'));
+                    }
+                    $all_dates = array_merge($all_dates, $friday_dates);
+                }
+                if($request->sat){
+                    $current_date = clone $start_date_obj;
+                    while ($current_date <= $end_date_obj) {
+                        // Check if the current date is a Sunday (weekday = 6 for Saturday)
+                        if ($current_date->format('w') === '6') {
+                            $saturday_dates[] = $current_date->format('Y-m-d');
+                        }
+
+                        // Increment the current date by 1 day
+                        $current_date->add(new DateInterval('P1D'));
+                    }
+                    $all_dates = array_merge($all_dates, $saturday_dates);
+                }
+
+                if(count($all_dates) > 0) {
+                    foreach($all_dates as $all_date){
+                        $schedule = new Schedule();
+                        $schedule->kt_calendar_datepicker_start_date = $all_date;
+                        $schedule->kt_calendar_datepicker_end_date = $all_date;
+                        $schedule->start_time = $start_time;
+                        $schedule->end_time = $end_time;
+                        $schedule->patient_id = $request->patient_id;
+                        $schedule->mileage_rate = $request->mileage_rate;
+                        $schedule->user_rate  = $request->user_rate;
+                        $schedule->employee_id  = $request->employee_id;
+                        $schedule->task  = $request->task;
+                        $schedule->sc_sub_addon_id  = $request->sc_sub_addon_id;
+                        $schedule->bill_unit_type  = $request->bill_unit_type;
+                        $schedule->pay_unit_type  = $request->pay_unit_type;
+                        $schedule->scheduling_status  = $request->scheduling_status;
+                        $schedule->payor_sub_addon_id  = $request->payor_sub_addon_id;
+                        $schedule->scheduling_notes  = $request->scheduling_notes;
+                        $schedule->organization_id  = $organization_id;
+                        $schedule->created_at = date('Y-m-d H:i:s');
+                        if ($episode) {
+                        $schedule->episode_id  = $episode->id;
+                    }
+                    $schedule->save();
+                    }
+                } else {
+                    $s_date = Carbon::parse($start_date)->format('Y-m-d');
+                    $e_date = Carbon::parse($end_date)->format('Y-m-d');
+                        $schedule = new Schedule();
+                        $schedule->kt_calendar_datepicker_start_date = $s_date;
+                        $schedule->kt_calendar_datepicker_end_date = $e_date;
+                        $schedule->start_time = $start_time;
+                        $schedule->end_time = $end_time;
+                        $schedule->patient_id = $request->patient_id;
+                        $schedule->employee_id  = $request->employee_id;
+                        $schedule->mileage_rate = $request->mileage_rate;
+                        $schedule->user_rate  = $request->user_rate;
+                        $schedule->task  = $request->task;
+                        $schedule->sc_sub_addon_id  = $request->sc_sub_addon_id;
+                        $schedule->bill_unit_type  = $request->bill_unit_type;
+                        $schedule->pay_unit_type  = $request->pay_unit_type;
+                        $schedule->scheduling_status  = $request->scheduling_status;
+                        $schedule->payor_sub_addon_id  = $request->payor_sub_addon_id;
+                        $schedule->scheduling_notes  = $request->scheduling_notes;
+                        $schedule->organization_id  = $organization_id;
+                        $schedule->created_at = date('Y-m-d H:i:s');
+                        if ($episode) {
+                        $schedule->episode_id  = $episode->id;
+                    }                     
+                        $schedule->save();
+                }
+                return redirect('/schedule/calendar');
+            } else {
+                $schedule = new Schedule();
+                $schedule->kt_calendar_datepicker_start_date = $start_date;
+                $schedule->kt_calendar_datepicker_end_date = $end_date;
+                $schedule->start_time = $start_time;
+                $schedule->end_time = $end_time;
+                $schedule->patient_id = $request->patient_id;
+                $schedule->employee_id  = $request->employee_id;
+                $schedule->task  = $request->task;
+                $schedule->sc_sub_addon_id  = $request->sc_sub_addon_id;
+                $schedule->bill_unit_type  = $request->bill_unit_type;
+                $schedule->mileage_rate = $request->mileage_rate;
+                $schedule->user_rate  = $request->user_rate;
+                $schedule->pay_unit_type  = $request->pay_unit_type;
+                $schedule->scheduling_status  = $request->scheduling_status;
+                $schedule->payor_sub_addon_id  = $request->payor_sub_addon_id;
+                $schedule->scheduling_notes  = $request->scheduling_notes;
+                $schedule->organization_id  = $organization_id;
+                $schedule->created_at = date('Y-m-d H:i:s');
+                if ($episode) {
                     $schedule->episode_id  = $episode->id;
                 }
-                 if($schedule->save()){
-                     return redirect('/schedule/calendar');
-                 }
-             }
-         }
+
+                if($schedule->save())
+                {
+                    // now need to decrease un-used hours and increase used hours of authorization
+                    if(in_array($request->task, $task_list)) 
+                    {
+                        // get all Authorizations of the patient with unsed unites more than 0
+                        $authorizations = Authorization::where('patient_id', $request->patient_id)->where('unused_units', '>', 0)->get();
+                        foreach ($authorizations as $authorization) 
+                        {
+                            // if authorized unit is greater or same as needed units, then update used unit and break look
+                            if($authorization->unused_units >= $neededUnits)
+                            {
+                                $authorization->unused_units = $authorization->unused_units - $neededUnits;
+                                $authorization->used_units = $authorization->used_units + $neededUnits;
+                                $authorization->save();
+                                break;
+                            }
+                            // if authorized unit lass than needed units, then update used unit and continue
+                            else
+                            {
+                                $neededUnits = $neededUnits - $authorization->unused_units;
+                                $authorization->unused_units = 0;
+                                $authorization->used_units = $authorization->authorized_units;
+                                $authorization->save();
+                            }
+                        }
+                    }
+                    
+                    return redirect('/schedule/calendar');
+                }
+            }
+        }
     }
 
     public function getEditWeekSchedule(Request $request){
@@ -766,28 +1061,67 @@ class ScheduleCalendar extends Controller
         ]);
     }
 
-    public function deleteSchedule(Request $request){
-        for ($i = 0; $i < count($request->ids); $i++) {
-            $schedule = Schedule::find($request->ids[$i]);
-            if ($schedule) {
-                $schedule->delete();
-                return response()->json([
-                    'status' => 200,
-                    'message' => 'Schedule Deleted Successfully!',
-                ]);
-            } else {
-                return response()->json([
-                    'status' => 404,
-                    'message' => 'Schedule not found!',
-                ]);
-            }
-        }
+    // public function deleteSchedule(Request $request){
+    //     for ($i = 0; $i < count($request->ids); $i++) {
+    //         $schedule = Schedule::find($request->ids[$i]);
+    //         if ($schedule) {
+    //             $schedule->delete();
+    //             return response()->json([
+    //                 'status' => 200,
+    //                 'message' => 'Schedule Deleted Successfully!',
+    //             ]);
+    //         } else {
+    //             return response()->json([
+    //                 'status' => 404,
+    //                 'message' => 'Schedule not found!',
+    //             ]);
+    //         }
+    //     }
 
 //        $schedule = Schedule::where('id', $request->id)->first();
 //        return response()->json([
 //            'status' => 200,
 //            'schedule' => $schedule,
 //        ]);
+    // }
+
+    public function deleteSchedule(Request $request)
+    {
+        $status = 200;
+        $message = 'Schedules Deleted Successfully!';
+
+        for ($i = 0; $i < count($request->ids); $i++) {
+            $schedule = Schedule::find($request->ids[$i]);
+
+            if (!$schedule) {
+                $status = 404;
+                $message = 'Schedule not found!';
+            } else {
+                $schedule->delete();
+            }
+        }
+
+        return redirect()->back()->with([
+            'status' => $status,
+            'message' => $message,
+        ]);
+    }
+
+    public function restore($id)
+    {
+        $schedule = Schedule::withTrashed()->find($id);
+
+        if (!$schedule) {
+            return redirect()->back()->with(['success',
+                'message' => 'Schedule not found!',
+            ]);
+        }
+
+        $schedule->restore();
+
+        return redirect()->back()->with(['success',
+            'message' => 'Schedule restored successfully!',
+        ]);
     }
 
     public function updateDate($days, $currentDate) {

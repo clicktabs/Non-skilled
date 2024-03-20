@@ -36,6 +36,38 @@
 @push('scripts')
 
 <script>
+    // jQuery script to handle checkbox change event
+    $(document).ready(function() {
+        $('#same_emergency_contact').change(function() {
+            if ($(this).is(':checked')) {
+                // If checkbox is checked, fill all inputs with the same values
+                var emergencyFirst = $('#emergency_first_name').val();
+                var emergencyRelation = $('#emergency_relationship_patient').val();
+                var emergencyAddress = $('#emergency_patient_address').val();
+                var emergencyCity = $('#emergency_patient_city').val();
+                var emergencyState = $('#emergency_patient_state').val();
+                var emergencyZip = $('#emergency_patient_zip').val();
+                var emergencyPhone = $('#emergency_patient_phone').val();
+                var emergencyAltPhone = $('#emergency_alternate_phone').val();
+
+                // Fill alternate contact fields with the same values
+                $('#emergency_alternate_first_name').val(emergencyFirst);
+                $('#emergency_relationship_to_patient').val(emergencyRelation);
+                $('#emergency_relationship_address').val(emergencyAddress);
+                $('#emergency_relationship_city').val(emergencyCity);
+                $('#emergency_relationship_state').val(emergencyState);
+                $('#emergency_relationship_zip').val(emergencyZip);
+                $('#emergency_relationship_phone').val(emergencyPhone);
+                $('#emergency_relationship_alternate_phone').val(emergencyAltPhone);
+            } else {
+                // If checkbox is unchecked, clear all alternate contact fields
+                $('#emergency_alternate_first_name, #emergency_relationship_to_patient, #emergency_relationship_address, #emergency_relationship_city, #emergency_relationship_state, #emergency_relationship_zip, #emergency_relationship_phone, #emergency_relationship_alternate_phone').val('');
+            }
+        });
+    });
+</script>
+
+<script>
 
     function checkIcdName() {
         var name = $('#icd_field').find('input[name="icd_name_search"]').val();

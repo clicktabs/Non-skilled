@@ -16,6 +16,7 @@ class CreateHealthConditionsTable extends Migration
         Schema::create('health_conditions', function (Blueprint $table) {
             $table->id();
             $table->integer('patient_history_id')->nullable();
+            $table->integer('schedule_id')->nullable();
             
             $table->boolean('historyOfFalls')->nullable();
             $table->boolean('unintentional')->nullable();

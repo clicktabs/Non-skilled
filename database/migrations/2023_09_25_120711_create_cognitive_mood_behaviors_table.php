@@ -16,6 +16,7 @@ class CreateCognitiveMoodBehaviorsTable extends Migration
         Schema::create('cognitive_mood_behaviors', function (Blueprint $table) {
             $table->id();
             $table->integer('patient_history_id')->nullable();
+            $table->integer('schedule_id')->nullable();
             // page 7 
             $table->integer('mentalStatus')->nullable();
             $table->integer('repetition')->nullable();            

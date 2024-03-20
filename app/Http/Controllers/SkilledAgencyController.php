@@ -356,7 +356,7 @@ class SkilledAgencyController extends Controller
         }
 
         if(isset($request->save_exit)){
-
+            // dd($request()); 
             $nss=new NurseSectionSecond;
             $nss->agitated=$request->agitated;
             $nss->fearful=$request->fearful;
@@ -1190,6 +1190,7 @@ class SkilledAgencyController extends Controller
      */
     public function storeOasisEDeath(Request $request) {
         $oed = new OasisEDeath();
+        $oed->schedule_id = $request->schedule_id;
         $oed->dopca = $request->dopca;
         $oed->assessmentCompleted_Month = $request->assessmentCompleted_Month;
         $oed->assessmentCompleted_Day = $request->assessmentCompleted_Day;
@@ -1309,7 +1310,6 @@ class SkilledAgencyController extends Controller
         $oed->personCompleting = $request->personCompleting;
         $oed->personCompleting_date = $request->personCompleting_date;
         $oed->personCompleting_time = $request->personCompleting_time;
-
         $oed->save();
 
         return redirect()->back();

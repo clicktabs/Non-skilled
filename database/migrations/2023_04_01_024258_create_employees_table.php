@@ -50,6 +50,7 @@ return new class extends Migration
 //            $table->time('earliest_login')->nullable();
 //            $table->time('automatic_logout');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

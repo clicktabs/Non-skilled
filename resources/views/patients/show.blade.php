@@ -555,7 +555,7 @@
                                                 <li class="{{ session('active_status_au', '') }}"><a href="#tabs-auth">Authorization Listings</a></li>
                                                 <li><a href="#tabs-communication">Communication Notes</a></li>
                                                 <li class="{{ session('active_status_v', '') }}"><a href="#tabs-vital">Vital Signs Charts</a></li>
-                                                {{-- <li><a href="#sixty-day-summaries">60 Day Summaries</a></li> --}}
+                                                <li><a href="#tabs-docs">Patient Documents</a></li>
                                                 {{-- <li><a href="#tabs-nurseNote">Nurses Visit Note</a></li>
                                                 <li><a href="#tabs-nurseNote">Infection Control</a></li> --}}
                                             </ul>
@@ -588,8 +588,8 @@
                                             @include('patients.components.vital')
                                         </div>
 
-                                        <div class="px-[15px]" id="tabs-nurseNote">
-                                             {{-- @include('patients.nurse-note.index')  --}}
+                                        <div class="px-[15px]" id="tabs-docs">
+                                             @include('patients.components.patient-doc') 
                                         </div>
                                     </div> <!--tabs end-->
                                 </div>
@@ -957,6 +957,11 @@
             });
             $('.add_new_vital').click(function () {
                 $('#vitalModal').modal({
+                    fadeDuration: 100
+                })
+            });
+            $('.add_patient_documents').click(function () {
+                $('#docModal').modal({
                     fadeDuration: 100
                 })
             });

@@ -70,6 +70,13 @@ class PatientController extends Controller
         return view('patients.index', compact('patients'));
     }
 
+    public function patientindex()
+    {
+        $softDeletedPatients = Patient::onlyTrashed()->get();
+
+        return view('patients.patient-index', compact('softDeletedPatients'));
+    }
+
     public function create(Request $request)
     {
         $companyId = Auth::user()->organization_id;
@@ -236,7 +243,14 @@ class PatientController extends Controller
             ];
         }
 
-        return view('patients.show', compact('id', 'cmss','physicianOrders','patientHistorys','patients', 'patient', 'employees', 'services', 'service_codes', 'payors', 'medications', 'allergies', 'authorizations','immunizations','communications','vitals', 'matching_codes', 'restriction_codes', 'categories', 'allAttributes', 'compatibilitys', 'caregivers', 'restrictions', 'attributes', 'NursingTasks', 'HaaTasks','MswOthers','Therapys','Dietitians','DailyOutliars', 'primaryInsurances','secondaryInsurances','physicians', 'schedules', 'account','orgn', 'episode_manager', 'physicians', 'pharmacies', 'data'));
+        $organization_id = Auth::user()->organization_id;
+        $agency_addon = Addon::where('name', 'like', 'Agency Branch%')->where('status', '1')->first();
+        $agency_branch = get_sub_addons($agency_addon, $organization_id);
+
+        $insurance_addon= Addon::where('name', 'like', 'Insurance Type%')->where('status', '1')->first();
+        $social_insurance = get_sub_addons($insurance_addon, $organization_id);
+
+        return view('patients.show', compact('id', 'cmss','physicianOrders','patientHistorys','patients', 'patient', 'employees', 'services', 'service_codes', 'payors', 'medications', 'allergies', 'authorizations','immunizations','communications','vitals', 'matching_codes', 'restriction_codes', 'categories', 'allAttributes', 'compatibilitys', 'caregivers', 'restrictions', 'attributes', 'NursingTasks', 'HaaTasks','MswOthers','Therapys','Dietitians','DailyOutliars', 'primaryInsurances','secondaryInsurances','physicians', 'schedules', 'account','orgn', 'episode_manager', 'physicians', 'pharmacies', 'data', 'social_insurance'));
     }
 
     public function edit(Patient $patient)
@@ -273,15 +287,38 @@ class PatientController extends Controller
 
     public function destroy($patient)
     {
-        $toBeDeleted = Patient::where('patient_code', $patient)->first();
-        $status = ($toBeDeleted->status) ?  [false, "Disabled"] :  [true, "Enabled"] ;
+        $patient = Patient::where('patient_code', $patient)->first();
+        if (!$patient) {
+            return redirect()->back()->with('error', "Error! Patient not found.");
+        }
+        $status = ($patient->trashed()) ? [true, "Restored"] : [false, "Soft Deleted"];
         try {
-            $toBeDeleted->update(['status' => $status[0]]);
+            if ($patient->trashed()) {
+                $patient->restore();
+            } else {
+                $patient->delete();
+            }
             return redirect()->back()->with('success', "Successful! Patient Successfully $status[1]");
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', "Error! Patient Could Not $status[1].");
         }
+    }
 
+    public function restore($patient)
+    {
+        $patient = Patient::withTrashed()->where('patient_code', $patient)->first();
+
+        if (!$patient) {
+            return redirect()->back()->with('error', "Error! Patient not found.");
+        }
+
+        try {
+            $patient->restore();
+
+            return redirect()->back()->with('success', "Successful! Patient Successfully Restored");
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', "Error! Patient Could Not be Restored.");
+        }
     }
 
     public function PatientsAjax(Request $request) {

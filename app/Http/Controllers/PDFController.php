@@ -329,6 +329,23 @@ class PDFController extends Controller
         return response()->file(storage_path('app/' . $filePath))->deleteFileAfterSend(false);
     }
 
+    public function Physician(Request $request) {
+        $physicians = Physician::findMany( $request->physician_ids );
+        $reportType = $request->reportType;
+
+        $html = View::make('pdf.patients.physicians-list-pdf', compact('physicians', 'reportType'))->render();
+
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'potrait');
+        $dompdf->render();
+        $filename = 'pdf_physicians_' . time() . '.pdf';
+        $filePath = 'pdfs/' . $filename;
+        Storage::put($filePath, $dompdf->output());
+
+        return response()->file(storage_path('app/' . $filePath))->deleteFileAfterSend(false);
+    }
+
     public function PatientStartOfCare(Request $request) {
         $episodes = PatientEpisodeManager::findMany( $request->episode_ids );
         $reportType = $request->reportType;

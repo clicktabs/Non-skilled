@@ -74,16 +74,18 @@
                         </div>
                     </div>
                 </div>
-                <hr class="hr-st">
-        
                 <div class="row mt-3">
-                    <div class="col">
+                    <div class="col-sm-4">
                         <label for="emergency_alternate_address">Alternate Address:</label>
+                    </div>
+                    <div class="col-sm-4">
+                        <input type="checkbox" class="form-check-input" id="same_emergency_contact">
+                        <label class="form-check-label" for="same_emergency_contact">Same emergency contact</label>
                     </div>
                 </div>
                 <div class="row mt-3">
                     <div class="col">
-                        <label for="emergency_alternate_first_name">Name: <span class="text-red">*</span></label>
+                        <label for="emergency_alternate_first_name">Name: <span class="text-red"></span></label>
                         <input id="emergency_alternate_first_name" type="text" class="form-control s ou"
                                name="emergency_alternate_first_name" value="{{ old('emergency_alternate_first_name') }}">
                     </div>
@@ -181,7 +183,7 @@
                                    class="form-control">
                         </div>
                     </div>
-        
+
                     <div class="row mt-2">
                         <div class="col">
                             <span for="emergency_transportation">Has transportation & assistance of family </span>
@@ -263,8 +265,8 @@
                             <input id="emergency_dialysis_2" type="text" class="form-control s ou" name="coordination_of_care['dialysis']['emergency_dialysis_2']" />
                         </div>
                     </div>
-        
-        
+
+
                     <div class="row mt-3">
                         <div class="col">
                             <label>Wound Care Clinic:</label>

@@ -5,12 +5,12 @@
 <main>
 
 <div class="container">
-  <div class="vt p-2">@include('layouts.company_info')</div>
+  <div class="p-2">@include('layouts.company_info')</div>
   <div class="form-holder pt15 pb-5">
     <form action="{{route('nonskilled.hhaVisitNoteStore')}}"  method="POST">
         @csrf
         <input type="hidden" value="{{!empty($data)?$data:''}}" name="schedule_id">
-        <div class="row vt row-flex flex-md-row-reverse align-items-center">
+        <div class="row row-flex flex-md-row-reverse align-items-center">
            <div class="col-lg-4">
               <h1 class="text-lg-end fw-bolder text-uppercase">HOME CARE AIDE VISIT RECORD</h1>
            </div>
@@ -49,7 +49,7 @@
         <div class="request-data border border-2 rounded-4 overflow-hidden">
            <table class="table table-bordered default-td mb-0">
               <tr>
-                 <td class="text-center" colspan="2"><h4 class="bg-black text-white fw-bolder p-3">Check each activity completed during visit, refer to Aide Care Plan.</h4></td>
+                 <td class="!bg-[#4133BF] text-white fw-bolder p-2" colspan="2"><h4>Check each activity completed during visit, refer to Aide Care Plan.</h4></td>
               </tr>
               <tr>
                  <td class="p-0 md-w-60">
@@ -62,7 +62,7 @@
 
                        <!-- VITALS/RESULTS -->
                        <tr>
-                          <td colspan="3" class="bg-black text-white pt-1 pb-1"><b class="bg-black text-white fw-bolder p-2">VITALS/RESULTS</b></td>
+                          <td colspan="3" class="!bg-[#4133BF] text-white fw-bolder p-2"><b class="!bg-[#4133BF] text-white fw-bolder p-2">VITALS/RESULTS</b></td>
                        </tr>
                        <tr>
                           <td>
@@ -129,7 +129,7 @@
 
                        <!-- BATH -->
                        <tr>
-                          <td colspan="3" class="bg-black text-white pt-1 pb-1"><b>BATH</b></td>
+                          <td colspan="3" class="!bg-[#4133BF] text-white pt-1 pb-1"><b class="!bg-[#4133BF] text-white fw-bolder p-2">BATH</b></td>
                        </tr>
                        <tr>
                           <td class="labels-group">
@@ -169,7 +169,7 @@
 
                        <!-- HYGIENE/GROOMING -->
                        <tr>
-                          <td colspan="3" class="bg-black text-white pt-1 pb-1"><b>HYGIENE/GROOMING</b></td>
+                          <td colspan="3" class="!bg-[#4133BF] text-white pt-1 pb-1"><b class="!bg-[#4133BF] text-white fw-bolder p-2">HYGIENE/GROOMING</b></td>
                        </tr>
                        <tr>
                           <td><label class="form-check-label" for="assist_bath_chair"><input type="checkbox" name="assist_bath_chair" id="assist_bath_chair" value="1" class="form-check-input"> Personal Care</label></td>
@@ -242,7 +242,7 @@
                        </tr>
 
                        <tr>
-                          <td colspan="3" class="bg-black text-white pt-1 pb-1"><b>PROCEDURES</b></td>
+                          <td colspan="3" class="!bg-[#4133BF] text-white pt-1 pb-1"><b class="!bg-[#4133BF] text-white fw-bolder p-2">PROCEDURES</b></td>
                        </tr>
                        <tr>
                           <td><label class="form-check-label" for="perineal_care"><input type="checkbox" name="perineal_care" id="perineal_care" value="" class="form-check-input name="> Perineal Care</label></td>
@@ -310,7 +310,7 @@
 
                        <!-- ACTIVIY -->
                        <tr>
-                          <td colspan="3" class="bg-black text-white pt-1 pb-1"><b class="bg-black text-white fw-bolder p-2">ACTIVITY</b></td>
+                          <td colspan="3" class="!bg-[#4133BF] text-white pt-1 pb-1"><b class="!bg-[#4133BF] text-white fw-bolder p-2">ACTIVITY</b></td>
                        </tr>
                        <tr>
                           <td class="labels-group">
@@ -390,7 +390,7 @@
 
                        <!-- NUTRITION -->
                        <tr>
-                          <td colspan="3" class="bg-black text-white pt-1 pb-1"><b>NUTRITION</b></td>
+                          <td colspan="3" class="!bg-[#4133BF] text-white pt-1 pb-1"><b class="!bg-[#4133BF] text-white fw-bolder p-2">NUTRITION</b></td>
                        </tr>
                        <tr>
                           <td><label class="form-check-label" for="meal_preparation"><input type="checkbox" name="meal_preparation" id="meal_preparation" value="1" class="form-check-input"> Meal Preparation</label></td>
@@ -428,7 +428,7 @@
 
                        <!-- OTHER -->
                        <tr>
-                          <td colspan="3" class="bg-black text-white pt-1 pb-1"><b>OTHER</b></td>
+                          <td colspan="3" class="!bg-[#4133BF] text-white pt-1 pb-1"><b class="!bg-[#4133BF] text-white fw-bolder p-2">OTHER</b></td>
                        </tr>
                        <tr>
                           <td><label class="form-check-label" for="other_100"><input type="checkbox" name="other_100" id="other_100" value="1" class="form-check-input"> Wash Clothes</label></td>
@@ -506,17 +506,28 @@
                     <span><b>SIGNATURE/DATE</b></span>
                      <div class="row row-flex align-items-center gy-3 mt-2">
                        <div class="col-lg-4 col-md-8">
-                          <div class="input-group clean-input-group">
+                        <div class="col-md-9">
+                            <div id="nurseSignatureImageContainer" style="display: none;">
+                                <img id="nurseSignatureImage" src="" alt="Nurse's Signature">
+                                {{-- <input type="hidden" id="nurseSignaturePath" name="nurseSignaturePath" value=""> --}}
+                            </div>
+                            <label for="NurseSignature" class="form-check-label clean-input-group d-block"><input type="text" name="Signature" class="form-control"><i class="d-block"><small>Employee</small></i></label>
+                            <button type="button" class="btn btn-primary active" data-toggle="modal" data-target="#nurseFormModal">Add Signature</button>
+                        </div>
+
+                          {{-- <div class="input-group clean-input-group">
                              <label class="input-group-text m-0" for="signature_date"><b>Employee</b></label>
                              <input type="text" class="form-control" name="signature_date" id="signature_date" value="">
-                          </div>
+                          </div> --}}
                        </div>
+
                        <div class="col-lg-2 col-md-4">
                           <div class="input-group clean-input-group input-group-block">
                              <input type="text" class="form-control" for="date">
                              <label class="input-group-text" name="date" id="date" value=""><i>Date</i></label>
                           </div>
                        </div>
+
                        <div class="col-lg-4 col-md-8">
                           <div class="input-group clean-input-group">
                              <label class="input-group-text m-0" for="patientsign"><b>Patient</b></label>
@@ -538,14 +549,18 @@
               </tr>
            </table>
         </div>
+
         <div class=" mt-4">
            <button type="submit" class=" btn btn-primary btn-block active" >Save</button>
        </div>
+
      </form>
   </div>
 </div>
-
-<script src="bs/js/bootstrap.min.js"></script>
 </main>
-
+@include('signature')
+<script src="bs/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 @endsection

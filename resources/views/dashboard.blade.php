@@ -306,7 +306,7 @@ border-bottom: 3px double;
 <!-- Content -->
     <div class="y">
         <h1 class="gu teu text-slate-800 font-bold rt !text-[#fff]"> {{ $greatings ?? 'Good Day' }} {{$user->full_name}}
-        , Welcome Back. 👋</h1>
+        , Welcome Back. 👋 </h1>
     </div>
 </div>
 <div class="container-full">
@@ -364,7 +364,9 @@ border-bottom: 3px double;
                                                                     <td> {{Auth::user()->status == 1 ? 'Active' :'Inactive'}} </td>
                                                                 </tr>
                                                                     <td>Zip Code:</td>
-                                                                    <td>{{!empty($accountInfo->zip)?$accountInfo->zip:''}}</td>
+                                                                    <td>
+                                                                        {{!empty($accountInfo->zip)?$accountInfo->zip:''}}
+                                                                    </td>
                                                                 </tr>
                                                                 </tbody>
                                                             </table>
@@ -476,6 +478,12 @@ border-bottom: 3px double;
             <li class="flex-shrink-0">
                 <a href="#signature">Signature</a>
             </li>
+            {{-- <li class="flex-shrink-0">
+                <a href="#timeoff">Request Time OFF</a>
+            </li>
+            <li class="flex-shrink-0">
+                <a href="#leave">Request Leave Time</a>
+            </li> --}}
         </ul>
 
               <div id="employee_patient">
@@ -710,61 +718,22 @@ border-bottom: 3px double;
                 </div>
             </div>
         </div>
-
-        <div id="signature">
-            @include('addSignature')
-        </div>
-
-        <div id="updatePassword">
+         <div id="updatePassword">
             <div class="bg-white bd rounded-sm border border-slate-200 mt-2">
                 <div class="dk">
                     @include('auth.update-password')
                 </div>
             </div>
         </div>
+        <div id="signature">
+            @include('addSignature', compact('accountInfo'))
+        </div>
+        <div id="timeoff">
 
-        {{-- <div id="visit_note">
-            <form method="post" action="{{ route('visit-note.store') }}">
-            @csrf
-                <div class="flex items-center gap-[40px]">
-                    <div class="flex items-center gap-[15px]">
-                        <label for="p_communication_date">Date: </label>
-                        <input type="date" id="p_communication_date" name="p_communication_date" value="{{ old('p_communication_date') }}" />
-                    </div>
-                    <div>
-                        <div class="flex items-center gap-[15px]">
-                            <label for="p_communication_phy">Physician: </label>
-                            <select class="m-[0] w-[200px] border-[1px] border-[#dfdede]" id="p_communication_phy" name="p_communication_phy">
-                                <option value="">Select physician</option>
-                                @if($physicians)
-                                    @foreach($physicians as $single_physician)
-                                        <option value="{{ $single_physician->id }}">{{ $single_physician->first_name }}</option>
-                                    @endforeach
-                                @endif
-                            </select>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="flex items-center gap-[15px]">
-                            <label for="p_communication_patient">Patient: </label>
-                            <select class="m-[0] w-[200px] border-[1px] border-[#dfdede]" id="p_communication_patient" name="p_communication_patient">
-                                <option value="">Select patient</option>
-                                @if($patients)
-                                    @foreach($patients as $single_patient)
-                                        <option value="{{ $single_patient->id }}" >{{ $single_patient->first_name }}</option>
-                                    @endforeach
-                                @endif
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="mt-[20px]">
-                    <textarea name="p_communication_text" class="py-[10px] px-[10px] border-[1px] border-[#dfdede] w-full h-[250px]">{{ old('p_communication_text') }}</textarea>
-                </div>
-                        <button class="btn btn-primary" type="submit">Save</button>
-            </form>
-        </div> --}}
+        </div>
+        <div id="leave">
 
+        </div>
     </div>
 @endcan
 
@@ -1112,7 +1081,9 @@ document.getElementById('lon').value = lon;
                                     'no_show': 'no_show',
                                     'on_hold': 'on_hold',
                                     'hospitalization': 'hospitalization',
-                                    'completed': 'completed'
+                                    'completed': 'completed',
+                                    'not complete': 'on_hold',
+                                    'pending': 'pending',
                                 };
                                 var statusClass = statusClasses[data] || 'default-status';
                                 return `<div class="rounded-[5px] ${statusClass}">
@@ -1126,12 +1097,10 @@ document.getElementById('lon').value = lon;
                             className: "dt-center editor-delete",
                             orderable: false,
                             render: function (data, type, row) {
-                                let subscriptionPlanType = "DefaultPlan"; // Default plan type or fetch from row data
+                                let subscriptionPlanType = "DefaultPlan";
                                 let buttonsHtml = '';
-                                // Add your button logic here
-                                // Example:
                                 buttonsHtml += `<a href="/task-form/${data}" class="btn btn-primary" target="_blank">Open</a>`;
-                                // ...
+                                buttonsHtml += `<a href="/recycle-forms/${data}" class=" ml-1 btn btn-warning" target="_blank">Recycle</a>`;
                                 return buttonsHtml;
                             }
                         },
@@ -1139,10 +1108,10 @@ document.getElementById('lon').value = lon;
                 });
             },
             error: function (xhr, status, error) {
-                // Handle any errors that occur during the request
                 console.error("Error occurred: " + status, error);
             }
         });
+
     });
 </script>
 

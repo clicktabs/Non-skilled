@@ -317,7 +317,7 @@
         img {
             max-width: 100%;
         }
-        
+
         @media (max-width: 991px) {
             .mt-md-2 {
                 margin-top: 10px !important;
@@ -4870,7 +4870,7 @@
                         </td>
                     </tr>
                 </table> --}}
-    {{-- 
+    {{--
                 <table class="table table-borderless m-0">
                     <tr>
                         <td>{{$skinCondition->unstageablec2}}</td>
@@ -6001,8 +6001,8 @@
             </tr>
             <tr>
                 <td colspan="2">
-                    <b>3. Certification Period:</b> 
-                    From: {{isset($episodeDaterange->episode_start_date)?$episodeDaterange->episode_start_date:''}} &nbsp; 
+                    <b>3. Certification Period:</b>
+                    From: {{isset($episodeDaterange->episode_start_date)?$episodeDaterange->episode_start_date:''}} &nbsp;
                     To: {{isset($episodeDaterange->episode_end_date)?$episodeDaterange->episode_end_date:''}}
                 </td>
             </tr>
@@ -6043,8 +6043,8 @@
             </tr>
             <tr>
                 <td colspan="2">
-                    <b>11. ICD- 10-CM:</b> 
-                    Principal Diagnosis <b>{{ $patient && $patient->diagnosis ? $patient->diagnosis->primary_diagnosis_code : '' }}</b> &nbsp; 
+                    <b>11. ICD- 10-CM:</b>
+                    Principal Diagnosis <b>{{ $patient && $patient->diagnosis ? $patient->diagnosis->primary_diagnosis_code : '' }}</b> &nbsp;
                     Date: <b>{{ $patient && $patient->diagnosis ? $patient->diagnosis->created_at->format('Y-m-d') : '' }}</b>
                 </td>
             </tr>
@@ -6149,7 +6149,7 @@
             <tr>
                 <td colspan="2">
                     <b>3. Certification Period:</b>
-                     From <b>{{isset($episodeDaterange->episode_start_date)?$episodeDaterange->episode_start_date:''}}</b> &nbsp; 
+                     From <b>{{isset($episodeDaterange->episode_start_date)?$episodeDaterange->episode_start_date:''}}</b> &nbsp;
                      To <b>{{isset($episodeDaterange->episode_end_date)?$episodeDaterange->episode_end_date:''}}</b>
                 </td>
             </tr>
@@ -6217,22 +6217,21 @@
              </tr>
         </table>
     </div>
-   
+
 
     {{-- @include('pdf.home-care.pagecounter') --}}
 
     <div id="pageCounter">
         <span class="count">Page </span>
         <span>
-            <small>{!! !empty($account->company_name) ? '<b>Company:</b> ' . $account->company_name : '' !!}</small> | 
-            <small>{!! !empty($administrative->patientName) ? '<b>Patient Name:</b> ' . $administrative->patientName : '' !!}</small>, 
-            <small>{!! !empty($administrative->dateofbirth) ? '<b>DOB:</b> ' . $administrative->dateofbirth : '' !!}</small>, 
+            <small>{!! !empty($account->company_name) ? '<b>Company:</b> ' . $account->company_name : '' !!}</small> |
+            <small>{!! !empty($administrative->patientName) ? '<b>Patient Name:</b> ' . $administrative->patientName : '' !!}</small>,
+            <small>{!! !empty($administrative->dateofbirth) ? '<b>DOB:</b> ' . $administrative->dateofbirth : '' !!}</small>,
             <small>{!! !empty($administrative->socialSecurityNumber) ? '<b>SSN:</b> ' . $administrative->socialSecurityNumber : '' !!}</small>
         </span>
     </div>
 </body>
 </html>
-  
+
 
   {{-- CMS 485 --}}
-         

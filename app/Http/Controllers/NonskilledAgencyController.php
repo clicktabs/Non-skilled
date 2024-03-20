@@ -52,6 +52,8 @@ use App\Models\NursingAssessment3;
 use App\Models\QaList;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\NursingAssessmentRequest;
+use App\Models\Schedule;
+
 
 class NonskilledAgencyController extends Controller
 {
@@ -518,8 +520,17 @@ class NonskilledAgencyController extends Controller
             'patient_date' => $req->patient_date
 
         ]);
-        return redirect()->back()->with('success', ' HHA visit Record Created Successfully');
 
+        $qaList = QaList::updateOrInsert(
+            ['schedule_id' => $req->schedule_id],
+            ['status' => 0]
+        );
+
+        $schedule = Schedule::where('id', $req->schedule_id)->first();
+        $schedule->scheduling_status = 'pending';
+        $schedule->save();
+
+        return redirect()->route('patients.qa')->with('success', ' HHA visit Record Created Successfully');
     }
     public function hhaVisitNoteUpdate(Request $req)
     {
@@ -706,7 +717,11 @@ class NonskilledAgencyController extends Controller
             ['status' => 0]
         );
 
-        return redirect()->back()->with('success', ' HHA visit Record Updated Successfully');
+        $schedule = Schedule::where('id', $req->schedule_id)->first();
+        $schedule->scheduling_status = 'pending';
+        $schedule->save();
+
+        return redirect()->route('patients.qa')->with('success', ' HHA visit Record Updated Successfully');
 
     }
 

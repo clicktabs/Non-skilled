@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Authorization;
 use App\Models\PrimaryInsurance;
+use App\Models\Schedule;
 
 class AuthorizationController extends Controller
 {
@@ -83,6 +84,8 @@ class AuthorizationController extends Controller
         $authorization->eoc_date = $request->eoc_date;
         $authorization->service_code = $request->service_code;
         $authorization->authorized_units = $request->authorized_units;
+        $authorization->unused_units = $request->authorized_units;
+
         $authorization->save();
 
         $active_status_au = 'ui-tabs-active ui-state-active';

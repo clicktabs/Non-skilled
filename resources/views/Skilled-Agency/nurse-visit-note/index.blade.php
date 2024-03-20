@@ -493,10 +493,10 @@ width: 90% !important;
 @section('content')
 <main>
 <div class="main_wrapper">
-<div class="container-full">
+<div class="container-full" style="padding-top: 50px; padding-left: 50px; padding-right: 50px;">
 <div class="row">
 <div class="col-lg-12">
-<div class="main_content pb-[50px]">
+<div class="main_content">
 <div id="teb">
 <div class="main_content_nav">
 <ul class="bg-[#4133BF]">
@@ -505,8 +505,8 @@ width: 90% !important;
 </ul>
 </div>
 
-@include('skilled-agency.nurse-visit-note.tab2')
-@include('skilled-agency.nurse-visit-note.tab1')
+@include('Skilled-Agency.nurse-visit-note.tab2')
+@include('Skilled-Agency.nurse-visit-note.tab1')
 
 </div>
 </div>

@@ -16,6 +16,7 @@ class CreateActiveDiagnosesTable extends Migration
         Schema::create('active_diagnoses', function (Blueprint $table) {
             $table->id();
             $table->integer('patient_history_id')->nullable();
+            $table->integer('schedule_id')->nullable();
             $table->text('parimaryOne')->nullable();
             $table->text('primaryAllow')->nullable();
             $table->boolean('primaryAllowValue0')->nullable();

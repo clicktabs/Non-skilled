@@ -99,7 +99,7 @@
                                             </select>
                                         </div>
                                         <div class="col-sm-4">
-                                            <span for="middle_name">External Case Manager: </span>                                       
+                                            <span for="middle_name">External Case Manager: </span>
                                             <select name="case_manager" id="case_manager"
                                                     class="form-control s ou case-manager-drop-down" value="{{ old('case_manager') }}">
                                                 <option value="">--- Select ---</option>
@@ -289,7 +289,7 @@
                                                 <div class="row mt-2">
                                                     <div class="col">
                                                         <label class="font-normal" for="needs_interpreter_american">A. White</label>
-                                                        <input type="checkbox" name="ethnicity_requested[]" value="white" id="white" class="form-control">
+                                                        <input type="checkbox" name="ethnicity_requested[]" value="United States" id="white" class="form-control">
                                                     </div>
                                                 </div>
                                                 <div class="row mt-2">
@@ -445,7 +445,7 @@
                                                                         <input type="checkbox" name="race_ethnicity[]" id="needs_interpreter_hispanic" value="Yes, Cuban" class="form-control">
                                                                     </div>
                                                                 </div>
-                                                            
+
                                                         </div>
                                                     </div>
                                                 </div>

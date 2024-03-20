@@ -3,7 +3,7 @@
             <div class="col-md-12">
                 <p class="p-1">
                     <marquee behavior="scroll" direction="left" class="text-white">
-                        <h1 class="text-white fw-bolder" style="font-size: 20px;">We're working to add more report options incase you experience pop-ups bugs | Special Offers Unlimited Users Unlimited Patients $350.00 Monthly | One Time Signup Fee $1250.00</h1>
+                        <h1 class="text-white fw-bolder" style="font-size: 20px;">We're Happy To Announce The Release Of Skilled Agency Version 1.0  Special Offers Unlimited Users Unlimited Patients $450.00 Monthly | One Time Signup Fee $1250.00</h1>
                      </marquee>
                 </p>
             </div>

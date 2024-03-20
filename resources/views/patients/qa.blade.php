@@ -83,127 +83,306 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
-            var start_date = moment().subtract(1, 'M');
-            var end_date = moment();
-            var dateRange = start_date.format('MM/DD/YYYY') + ' - ' + end_date.format('MM/DD/YYYY');
+var start_date = moment().subtract(1, 'M');
+var end_date = moment();
+var dateRange = start_date.format('MM/DD/YYYY') + ' - ' + end_date.format('MM/DD/YYYY');
 
-            let startDate = '', endDate = '';
-            $('#daterange span').html(dateRange);
+let startDate = '', endDate = '';
+$('#daterange span').html(dateRange);
 
-            $('#daterange').daterangepicker({
-                startDate: start_date,
-                endDate: end_date,
-                ranges: {
-                    'Last 30 Days': [moment().subtract(30, 'days'), moment()],
-                    'This Month': [moment().startOf('month'), moment().endOf('month')],
-                    // Add more ranges as needed
-                }
-            }, function (start, end) {
-                startDate = start.format('MM/DD/YYYY');
-                endDate = end.format('MM/DD/YYYY');
-                table.draw();
-            });
+$('#daterange').daterangepicker({
+    startDate: start_date,
+    endDate: end_date,
+    ranges: {
+        'Last 30 Days': [moment().subtract(30, 'days'), moment()],
+        'This Month': [moment().startOf('month'), moment().endOf('month')],
+        // Add more ranges as needed
+    }
+}, function (start, end) {
+    startDate = start.format('MM/DD/YYYY');
+    endDate = end.format('MM/DD/YYYY');
+    table.draw();
+});
 
-            // task
-            var taskName = '';
-            $("#task").on("input", function () {
-                taskName = $(this).children("option:selected").val();
-                table.draw();
-            });
+// task
+var taskName = '';
+$("#task").on("input", function () {
+    taskName = $(this).children("option:selected").val();
+    table.draw();
+});
 
-            var table = $('#daterange_table').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: {
-                url: "{{ route('patients.qa') }}",
-                data: function (data) {
-                    if (startDate && endDate) {
-                        data.from_date = startDate;
-                        data.to_date = endDate;
-                    }
-                    if (taskName) {
-                        data.search['value'] = taskName;
-                    }
-                }
-            },
-                columns: [
-                    { data: 'id', name: 'id' },
-                    { data: 'name', name: 'first_name', className: "details-control" },
-                    { data: 'mrn', name: 'mrn' },
-                    { data: 'event_date', name: 'event_date' },
-                    { data: 'type', name: 'type' },
-                    { data: 'task', name: 'task' },
-                    { data: 'status', name: 'status' },
-                    { data: 'notes', name: 'notes' },
-                    { data: 'assigned_to', name: 'assigned_to' },
-                ]
-            });
-
-            function format(d) {
-                return $(`<tr>
-                                <td colspan="9">
-                                    <input type="checkbox" class="approval-checkbox" data-qa-id="${d.schedule_id}" value="1">
-                                    <label for="approve">Approve</label>
-                                    <input type="checkbox" class="approval-checkbox" data-qa-id="${d.schedule_id}" value="2">
-                                    <label for="reject">Reject</label>
-                                </td>
-                                <td style="display: none;"></td>
-                            </tr>`).toArray();
+var table = $('#daterange_table').DataTable({
+    processing: true,
+    serverSide: true,
+    ajax: {
+        url: "{{ route('patients.qa') }}",
+        data: function (data) {
+            if (startDate && endDate) {
+                data.from_date = startDate;
+                data.to_date = endDate;
             }
+            if (taskName) {
+                data.search['value'] = taskName;
+            }
+        }
+    },
+    columns: [
+        { data: 'id', name: 'id' },
+        { data: 'name', name: 'first_name', className: "details-control" },
+        { data: 'mrn', name: 'mrn' },
+        { data: 'event_date', name: 'event_date' },
+        { data: 'type', name: 'type' },
+        { data: 'task', name: 'task' },
+        { data: 'status', name: 'status' },
+        { data: 'notes', name: 'notes' },
+        { data: 'assigned_to', name: 'assigned_to' },
+    ]
+});
 
-            $('#daterange_table tbody').on('click', 'td.details-control', function () {
-                var tr = $(this).parents('tr');
-                var row = table.row(tr);
+function format(d) {
+    var checkboxHtml = `
+        <input type="checkbox" class="approval-checkbox" data-qa-id="${d.schedule_id}" value="1">
+        <label for="approve">Approve</label>
+        <input type="checkbox" class="approval-checkbox reject-checkbox" data-qa-id="${d.schedule_id}" value="2">
+        <label for="reject">Reject</label>
+    `;
+    var textareaHtml = `
+        <textarea class="reject-note form-control" style="display: none;" data-qa-id="${d.schedule_id}"></textarea>
+        <button class="btn btn-primary btn-sm submit-note" data-qa-id="${d.schedule_id}" style="display: none;">Submit</button>
+    `;
+    return $('<tr>')
+        .append($('<td>').attr('colspan', '9').html(checkboxHtml + textareaHtml))
+        .append($('<td>').css('display', 'none'));
+}
 
-                console.log(row.child);
+$('#daterange_table tbody').on('click', 'td.details-control', function () {
+    var tr = $(this).closest('tr');
+    var row = table.row(tr);
 
-                if (row.child.isShown()) {
-                    // This row is already open - close it
-                    row.child.hide();
-                    tr.removeClass('shown');
-                } else {
-                    // Open this row (the format() function would return the data to be shown)
-                    row.child(format(row.data())).show();
-                    tr.addClass('shown');
-                }
-            });
+    if (row.child.isShown()) {
+        // This row is already open - close it
+        row.child.hide();
+        tr.removeClass('shown');
+    } else {
+        // Open this row (the format() function would return the data to be shown)
+        row.child(format(row.data())).show();
+        tr.addClass('shown');
+    }
+});
 
-            $('#daterange_table tbody').on('change', '.approval-checkbox', function () {
-                var status = $(this).val();
-                var qaId = $(this).data('qa-id');
+// Event listener for reject checkbox
+$('#daterange_table tbody').on('change', '.reject-checkbox', function () {
+    var $textarea = $(this).siblings('.reject-note');
+    var $submitBtn = $(this).siblings('.submit-note');
+    if ($(this).is(':checked')) {
+        $textarea.show(); // Show the textarea if the checkbox is checked
+        $submitBtn.show(); // Show the submit button
+    } else {
+        $textarea.hide(); // Hide the textarea if the checkbox is unchecked
+        $submitBtn.hide(); // Hide the submit button
+    }
+});
 
-                $.ajax({
-                    url: '{{ route("update-status") }}',
-                    type: 'POST',
-                    data: {
-                        '_token': '{{ csrf_token() }}',
-                        'status': status,
-                        'qa_id': qaId
-                    },
-                    success: function (response) {
-                        if (response.success) {
-                            console.log('Status updated successfully!');
-                            toastr.success(response.success);
-                            table.draw();
-                        } else if (response.warning) {
-                            console.log('Warning: ' + response.warning);
-                            toastr.warning(response.warning);
-                            table.draw();
-                        } else {
-                            console.log('Error: ' + response.danger);
-                            toastr.error(response.danger);
-                        }
-                    },
-                    error: function (error) {
-                        console.log('Error:', error);
-                        toastr.error('Error updating status.');
-                    }
-                });
-            });
+// Event listener for submitting note
+$('#daterange_table tbody').on('click', '.submit-note', function () {
+    var note = $(this).siblings('.reject-note').val(); // Get the value of the textarea
+    var scheduleId = $(this).data('qa-id'); // Get the schedule ID from data attribute
+    var status = 2; // Set status to 2 (rejected)
 
-        });
+    // Now you can perform an AJAX request to save the note and update the status associated with the schedule ID
+    // Example AJAX request (replace it with your actual AJAX request):
+    $.ajax({
+        url: '{{ route("update-status") }}', // Replace with your route URL for updating status
+        method: 'POST',
+        data: {
+            '_token': '{{ csrf_token() }}',
+            'status': status,
+            'qa_id': scheduleId,
+            'note': note
+        },
+        success: function (response) {
+            if (response.success) {
+                console.log('Status updated successfully!');
+                toastr.success(response.success);
+                table.draw();
+            } else if (response.warning) {
+                console.log('Warning: ' + response.warning);
+                toastr.warning(response.warning);
+                table.draw();
+            } else {
+                console.log('Error: ' + response.danger);
+                toastr.error(response.danger);
+            }
+        },
+        error: function (error) {
+            console.log('Error:', error);
+            toastr.error('Error updating status.');
+        }
+    });
+});
+
+// Event listener for approving
+$('#daterange_table tbody').on('change', '.approval-checkbox[value="1"]', function () {
+    var status = $(this).is(':checked') ? 1 : 0;
+    var qaId = $(this).data('qa-id');
+
+    // Now you can perform an AJAX request to update the status associated with the schedule ID
+    // Example AJAX request (replace it with your actual AJAX request):
+    $.ajax({
+        url: '{{ route("update-status") }}', // Replace with your route URL for updating status
+        method: 'POST',
+        data: {
+            '_token': '{{ csrf_token() }}',
+            'status': status,
+            'qa_id': qaId
+        },
+        success: function (response) {
+            if (response.success) {
+                console.log('Status updated successfully!');
+                toastr.success(response.success);
+                table.draw();
+            } else if (response.warning) {
+                console.log('Warning: ' + response.warning);
+                toastr.warning(response.warning);
+                table.draw();
+            } else {
+                console.log('Error: ' + response.danger);
+                toastr.error(response.danger);
+            }
+        },
+        error: function (error) {
+            console.log('Error:', error);
+            toastr.error('Error updating status.');
+        }
+    });
+});
+
+});
+
     </script>
 
+{{-- <script type="text/javascript">
+    $(document).ready(function () {
 
+        var start_date = moment().subtract(1, 'M');
+        var end_date = moment();
+        var dateRange = start_date.format('MM/DD/YYYY') + ' - ' + end_date.format('MM/DD/YYYY');
+
+        let startDate = '', endDate = '';
+        $('#daterange span').html(dateRange);
+
+        $('#daterange').daterangepicker({
+            startDate: start_date,
+            endDate: end_date,
+            ranges: {
+                'Last 30 Days': [moment().subtract(30, 'days'), moment()],
+                'This Month': [moment().startOf('month'), moment().endOf('month')],
+                // Add more ranges as needed
+            }
+        }, function (start, end) {
+            startDate = start.format('MM/DD/YYYY');
+            endDate = end.format('MM/DD/YYYY');
+            table.draw();
+        });
+
+        // task
+        var taskName = '';
+        $("#task").on("input", function () {
+            taskName = $(this).children("option:selected").val();
+            table.draw();
+        });
+
+        var table = $('#daterange_table').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+            url: "{{ route('patients.qa') }}",
+            data: function (data) {
+                if (startDate && endDate) {
+                    data.from_date = startDate;
+                    data.to_date = endDate;
+                }
+                if (taskName) {
+                    data.search['value'] = taskName;
+                }
+            }
+        },
+            columns: [
+                { data: 'id', name: 'id' },
+                { data: 'name', name: 'first_name', className: "details-control" },
+                { data: 'mrn', name: 'mrn' },
+                { data: 'event_date', name: 'event_date' },
+                { data: 'type', name: 'type' },
+                { data: 'task', name: 'task' },
+                { data: 'status', name: 'status' },
+                { data: 'notes', name: 'notes' },
+                { data: 'assigned_to', name: 'assigned_to' },
+            ]
+        });
+
+        function format(d) {
+            return $(`<tr>
+                            <td colspan="9">
+                                <input type="checkbox" class="approval-checkbox" data-qa-id="${d.schedule_id}" value="1">
+                                <label for="approve">Approve</label>
+                                <input type="checkbox" class="approval-checkbox" data-qa-id="${d.schedule_id}" value="2">
+                                <label for="reject">Reject</label>
+                            </td>
+                            <td style="display: none;"></td>
+                        </tr>`).toArray();
+        }
+
+        $('#daterange_table tbody').on('click', 'td.details-control', function () {
+            var tr = $(this).parents('tr');
+            var row = table.row(tr);
+
+            console.log(row.child);
+
+            if (row.child.isShown()) {
+                // This row is already open - close it
+                row.child.hide();
+                tr.removeClass('shown');
+            } else {
+                // Open this row (the format() function would return the data to be shown)
+                row.child(format(row.data())).show();
+                tr.addClass('shown');
+            }
+        });
+
+        $('#daterange_table tbody').on('change', '.approval-checkbox', function () {
+            var status = $(this).val();
+            var qaId = $(this).data('qa-id');
+
+            $.ajax({
+                url: '{{ route("update-status") }}',
+                type: 'POST',
+                data: {
+                    '_token': '{{ csrf_token() }}',
+                    'status': status,
+                    'qa_id': qaId
+                },
+                success: function (response) {
+                    if (response.success) {
+                        console.log('Status updated successfully!');
+                        toastr.success(response.success);
+                        table.draw();
+                    } else if (response.warning) {
+                        console.log('Warning: ' + response.warning);
+                        toastr.warning(response.warning);
+                        table.draw();
+                    } else {
+                        console.log('Error: ' + response.danger);
+                        toastr.error(response.danger);
+                    }
+                },
+                error: function (error) {
+                    console.log('Error:', error);
+                    toastr.error('Error updating status.');
+                }
+            });
+        });
+
+    });
+</script> --}}
 
 @endsection

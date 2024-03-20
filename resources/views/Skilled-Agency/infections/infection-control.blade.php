@@ -77,7 +77,7 @@
 @section('outer_html')
    <!-- Modal -->
    <div id="infectionLogModal" style="max-width: 70%;" class="max-w-[450px] bg-white p-[15px] hidden !h-fit z-[999]">
-         @include('skilled-agency.infections.infection-modal')
+         @include('Skilled-Agency.infections.infection-modal')
     </div>
 </div>
 @endsection

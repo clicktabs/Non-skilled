@@ -17,14 +17,6 @@
                         <div class="col-lg-12">
                             <div class="main_content pb-[50px]">
                                 <div id="section">
-
-                                    <div class="main_content_nav">
-                                        <ul class="bg-[#4133BF]">
-                                            <li ><a href="#section-addEmployee">Add Employee</a></li>
-                                            {{-- <li ><a href="#section-hrinfo">Employee HR Information</a></li> --}}
-                                        </ul>
-                                    </div>
-
                                     <div class="px-[15px]" id="section-addEmployee">
                                         @include('employees.components.create_form')
                                     </div>
@@ -134,7 +126,7 @@
             {
                 for(i = 0; i < arr.length; i++)
                 {
-                    out += "<div class='address py-[10px] cursor-pointer bg-[#f5f5f5] px-[15px] mb-[10px]' data-addressLine1='"+arr[i].properties.address_line1+"' data-county='"+arr[i].properties.county+"' data-city='"+arr[i].properties.city+"' data-country='"+arr[i].properties.county+"'  data-lat='"+arr[i].properties.lat+"' data-lon='"+arr[i].properties.lon+"' data-state='"+arr[i].properties.state+"'>" + arr[i].properties.formatted + "</div>";
+                    out += "<div class='address py-[10px] cursor-pointer bg-[#f5f5f5] px-[15px] mb-[10px]' data-addressLine1='"+arr[i].properties.address_line1+"' data-country='"+arr[i].properties.country+"' data-city='"+arr[i].properties.city+"' data-postcode='"+arr[i].properties.postcode+"'  data-lat='"+arr[i].properties.lat+"' data-lon='"+arr[i].properties.lon+"' data-state='"+arr[i].properties.state+"'>" + arr[i].properties.formatted + "</div>";
                 }
                 document.getElementById('results').innerHTML = out;
             }
@@ -145,12 +137,12 @@
         }
 
         jQuery(document).on('click', '.address', function () {
-            console.log(jQuery(this).data)
+            console.log(jQuery(this).data);
             jQuery('#address_line_1').val(jQuery(this).data('addressline1'));
             // jQuery('#zip').val(jQuery(this).data('zip'));
-            jQuery('#county').val(jQuery(this).data('county'));
+            jQuery('#country').val(jQuery(this).data('country'));
             jQuery('#city').val(jQuery(this).data('city'));
-            jQuery('#zip').val(jQuery(this).data('zip'));
+            jQuery('#postcode').val(jQuery(this).data('postcode'));
             jQuery('#state').val(jQuery(this).data('state'));
             jQuery('#lat').val(jQuery(this).data('lat'));
             jQuery('#lon').val(jQuery(this).data('lon'));

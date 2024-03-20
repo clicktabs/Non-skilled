@@ -1,4 +1,4 @@
-<div class="tab">
+<div class="tab p-2">
     <button type="button" class="tablinks demographics" id="defaultOpen" onclick="openPage(event, 'demographics')">
         Demographics
     </button>
@@ -16,7 +16,7 @@
     <button type="button" class="tablinks insurance" onclick="openPage(event, 'insurance')">Insurance</button>
 </div>
 <input type="hidden" id="patient_id" value="{{ $patient->id }}"/>
-<div class="vt card mb-2 tabcontent" id="demographics">
+<div class="vt card mt-2 mb-2 tabcontent" id="demographics">
     <form class="patient_demographics_form" id="patientDemographicsForm" name="patientDemographicsForm" method="POST">
         @csrf
         <div class="card-header text-center !bg-[#4133BF]">
@@ -113,7 +113,7 @@
                 </div>
 
                 <div class="col">
-                    <span for="middle_name">External Case Manager: </span>                                       
+                    <span for="middle_name">External Case Manager: </span>
                     <select name="case_manager" id="case_manager"
                             class="form-control s ou case-manager-drop-down" value="{{ old('case_manager') }}">
                         <option value="">--- Select ---</option>
@@ -240,7 +240,7 @@
                                 <div class="form-group">
                                     <label for="p_s_country">Country: <span class="text-red">*</span></label>
                                     <input id="p_s_country" type="text" placeholder="Enter Country"
-                                        class="form-control s ou" name="p_s_country" value="{{ $pat->service->county }}">
+                                        class="form-control s ou" name="p_s_country" value="{{ $pat->service->country }}">
                                 </div>
                             </div>
                         </div>
@@ -445,61 +445,66 @@
 
                 <hr class="hr-st"/>
                 <div class="row">
-                    <div class="col-sm-12">
-                        <div class="col-md-12"><!---A1005. Ethnicity--->
-                            <div class="form-group">
-                                @php
-                                    $array_race = $patient->extra_info ? json_decode($patient->extra_info->race_ethnicity) : [];
-                                @endphp
+                    <div class="col-sm-6">
+                        <div class="col-sm-12">
+                            <div class="col-md-12"><!---A1005. Ethnicity--->
+                                <div class="form-group">
+                                    @php
+                                        $array_race = $patient->extra_info ? json_decode($patient->extra_info->race_ethnicity) : [];
+                                    @endphp
 
-                                <label for="race_ethnicity">
-                                    <span class="text-green">(A1005)</span>
-                                    Race <span class="text-red">*</span>(mark all that apply):
-                                </label>
+                                    <label for="race_ethnicity">
+                                        <span class="text-green">(A1005)</span>
+                                        Race <span class="text-red">*</span>(mark all that apply):
+                                    </label>
 
-                                <div class="row mt-2">
-                                    <div class="col">
-                                        <label class="font-normal" for="needs_interpreter_american">American Indian/ Alaskan</label>
-                                        <input type="checkbox" name="race_ethnicity[]" id="needs_interpreter_american" value="needs_interpreter_american" class="form-control" {{ in_array('needs_interpreter_american', $array_race) ? 'checked' : '' }}>
+                                    <div class="row mt-2">
+                                        <div class="col">
+                                            <label class="font-normal" for="needs_interpreter_american">A. No, not of Hispanic, Latino/a, or Spanish origin</label>
+                                            <input type="checkbox" name="race_ethnicity[]" id="needs_interpreter_american" value="No, not of Hispanic, Latino/a, or Spanish origin" {{ in_array('No, not of Hispanic, Latino/a, or Spanish origin', $array_race) ? 'checked' : '' }} class="form-control">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col">
-                                        <label class="font-normal" for="asian_race_ethnicity">Asian</label>
-                                        <input type="checkbox" name="race_ethnicity[]" id="asian_race_ethnicity" value="asian_race_ethnicity" class="form-control" {{ in_array('asian_race_ethnicity', $array_race) ? 'checked' : '' }}>
+                                    <div class="row mt-2">
+                                        <div class="col">
+                                            <label class="font-normal" for="asian_race_ethnicity">B. Yes, Mexican, Mexican American, Chicano/a</label>
+                                            <input type="checkbox" name="race_ethnicity[]" id="asian_race_ethnicity" value="Yes, Mexican, Mexican American, Chicano/a" {{ in_array('Yes, Mexican, Mexican American, Chicano/a', $array_race) ? 'checked' : '' }} class="form-control">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col">
-                                        <label class="font-normal" for="needs_interpreter_black">Black or African American</label>
-                                        <input type="checkbox" name="race_ethnicity[]" id="needs_interpreter_black" value="needs_interpreter_black" class="form-control" {{ in_array('needs_interpreter_black', $array_race) ? 'checked' : '' }}>
+                                    <div class="row mt-2">
+                                        <div class="col">
+                                            <label class="font-normal" for="needs_interpreter_black">C. Yes, Puerto Rican</label>
+                                            <input type="checkbox" name="race_ethnicity[]" id="needs_interpreter_black" value="Yes, Puerto Rican" {{ in_array('Yes, Puerto Rican', $array_race) ? 'checked' : '' }} class="form-control">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col">
-                                        <label class="font-normal" for="needs_interpreter_hispanic">Hispanic or Latino</label>
-                                        <input type="checkbox" name="race_ethnicity[]" id="needs_interpreter_hispanic" value="needs_interpreter_hispanic" class="form-control" {{ in_array('needs_interpreter_hispanic', $array_race) ? 'checked' : '' }}>
+                                    <div class="row mt-2">
+                                        <div class="col">
+                                            <label class="font-normal" for="needs_interpreter_hispanic">D. Yes, Cuban</label>
+                                            <input type="checkbox" name="race_ethnicity[]" id="needs_interpreter_hispanic" value="Yes, Cuban" {{ in_array('Yes, Cuban', $array_race) ? 'checked' : '' }} class="form-control">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col">
-                                        <label class="font-normal" for="needs_interpreter_native">Native Hawaiian or Pacific Islander</label>
-                                        <input type="checkbox" name="race_ethnicity[]" id="needs_interpreter_native" value="needs_interpreter_native" class="form-control" {{ in_array('needs_interpreter_native', $array_race) ? 'checked' : '' }}>
-                                    </div>
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col">
-                                        <label class="font-normal" for="needs_interpreter_white">White</label>
-                                        <input type="checkbox" name="race_ethnicity[]" id="needs_interpreter_white" value="needs_interpreter_white" class="form-control" {{ in_array('needs_interpreter_white', $array_race) ? 'checked' : '' }}>
-                                    </div>
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col">
-                                        <label class="font-normal" for="needs_interpreter_unknown">Unknown</label>
-                                        <input type="checkbox" name="race_ethnicity[]" id="needs_interpreter_unknown" value="needs_interpreter_unknown" class="form-control" {{ in_array('needs_interpreter_unknown', $array_race) ? 'checked' : '' }}>
-                                    </div>
-                                </div>
 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="row mt-2">
+                            <div class="col">
+                                <label class="font-normal" for="needs_interpreter_native">E. Yes, another Hispanic, Latino, or Spanish origin</label>
+                                <input type="checkbox" name="race_ethnicity[]" id="needs_interpreter_native" value="Yes, another Hispanic, Latino, or Spanish origin" {{ in_array('Yes, another Hispanic, Latino, or Spanish origin', $array_race) ? 'checked' : '' }} class="form-control">
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col">
+                                <label class="font-normal" for="needs_interpreter_white">X. Patient unable to respond</label>
+                                <input type="checkbox" name="race_ethnicity[]" id="needs_interpreter_white" value="Patient unable to respond" {{ in_array('Patient unable to respond', $array_race) ? 'checked' : '' }} class="form-control">
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col">
+                                <label class="font-normal" for="needs_interpreter_unknown">Y. Patient declines to respond</label>
+                                <input type="checkbox" name="race_ethnicity[]" id="needs_interpreter_unknown" value="Patient declines to respond" {{ in_array('Patient declines to respond', $array_race) ? 'checked' : '' }} class="form-control">
                             </div>
                         </div>
                     </div>
@@ -783,8 +788,10 @@
 
 
             </div>
+            <div class=" ml-4 pb-4">
+                <button type="submit" class="btn btn-primary !bg-[#6366f1] !text-white">Save and Continue</button>
+            </div>
 
-            <button type="submit" class="btn btn-primary !bg-[#6366f1] !text-white">Save and Continue</button>
         </div>
 
     </form>
@@ -808,7 +815,7 @@
                             @endforeach
                     </select>
                 </div>
-                <div class="col-md-7">
+                <div class="col-md-3">
                     <button type="button" class="btn btn-block add_new_physician hd xu ye button-float-right">Add new
                         Physician
                     </button>
@@ -913,7 +920,7 @@
                 </div>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary !bg-[#6366f1] !text-white">Save and Continue</button>
+        <button type="submit" class="btn btn-primary !bg-[#6366f1] !text-white m-3">Save and Continue</button>
     </form>
 </div>
 
@@ -1077,7 +1084,7 @@
                 </div>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary !bg-[#6366f1] !text-white">Save and Continue</button>
+        <button type="submit" class="btn btn-primary !bg-[#6366f1] !text-white m-3">Save and Continue</button>
     </div>
 </form>
 
@@ -1140,7 +1147,10 @@
                 </div>
             </div>
         </div>
-
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="same_emergency_contact">
+            <label class="form-check-label" for="same_emergency_contact">Same emergency contact</label>
+        </div>
         <hr class="hr-st">
 
         <div class="row mt-3">
@@ -1361,7 +1371,7 @@
 
         </div>
 
-        <button type="submit" class="btn btn-primary !bg-[#6366f1] !text-white">Save and Continue</button>
+        <button type="submit" class="btn btn-primary !bg-[#6366f1] !text-white m-3">Save and Continue</button>
     </div>
 </form>
 
@@ -1604,7 +1614,7 @@
                 </div>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary !bg-[#6366f1] !text-white">Save and Continue</button>
+        <button type="submit" class="btn btn-primary !bg-[#6366f1] !text-white m-3">Save and Continue</button>
     </div>
 </form>
 
@@ -1652,7 +1662,7 @@
                 </div>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary !bg-[#6366f1] !text-white">Save and Continue</button>
+        <button type="submit" class="btn btn-primary !bg-[#6366f1] !text-white m-3">Save and Continue</button>
     </div>
 </form>
 
@@ -1885,7 +1895,7 @@
                 </div>
             </div> --}}
         </div>
-        <button type="submit" class="btn btn-primary !bg-[#6366f1] !text-white">Save and Continue</button>
+        <button type="submit" class="btn btn-primary !bg-[#6366f1] !text-white m-3">Save and Continue</button>
     </div>
 </form>
 
@@ -1896,7 +1906,7 @@
             <h2 class="gh text-slate-800 text-white">Advance Directive</h2>
         </div>
         <div class="card-body row">
-            <div class="col">
+            <div class="col-md-4">
                 @php
                     $advanceDirectives = json_decode($pat->extra_info->advance_directives, true);
                 @endphp
@@ -1924,7 +1934,7 @@
                 </div>
 
             </div>
-            <div class="col">
+            <div class="col-md-4">
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col">
@@ -1968,8 +1978,9 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-4"></div>
         </div>
-        <button type="submit" class="btn btn-primary !bg-[#6366f1] !text-white">Save and Continue</button>
+        <button type="submit" class="btn btn-primary !bg-[#6366f1] !text-white m-3">Save and Continue</button>
     </div>
 </form>
 
@@ -2660,6 +2671,33 @@ get_pharmacy(<?php echo $selectpharmacyId; ?>);
             jQuery('#p_s_results').fadeOut();
             // console.log(jQuery(this).data('lat'), jQuery(this).data('lang'), jQuery(this).data('address'))
         });
+
+        jQuery('#same_emergency_contact').click(function () {
+        if (jQuery(this).is(':checked')) {
+            // If checkbox is checked, fill all inputs with the same values
+            var emergencyFirst = jQuery('#emergency_first_name').val();
+            var emergencyRelation = jQuery('#emergency_relationship_patient').val();
+            var emergencyAddress = jQuery('#emergency_patient_address').val();
+            var emergencyCity = jQuery('#emergency_patient_city').val();
+            var emergencyState = jQuery('#emergency_patient_state').val();
+            var emergencyZip = jQuery('#emergency_patient_zip').val();
+            var emergencyPhone = jQuery('#emergency_patient_phone').val();
+            var emergencyAltPhone = jQuery('#emergency_alternate_phone').val();
+
+            // Fill alternate contact fields with the same values
+            jQuery('#emergency_alternate_first_name').val(emergencyFirst);
+            jQuery('#emergency_relationship_to_patient').val(emergencyRelation);
+            jQuery('#emergency_relationship_address').val(emergencyAddress);
+            jQuery('#emergency_relationship_city').val(emergencyCity);
+            jQuery('#emergency_relationship_state').val(emergencyState);
+            jQuery('#emergency_relationship_zip').val(emergencyZip);
+            jQuery('#emergency_relationship_phone').val(emergencyPhone);
+            jQuery('#emergency_relationship_alternate_phone').val(emergencyAltPhone);
+        } else {
+            // If checkbox is unchecked, clear all alternate contact fields
+            jQuery('#emergency_alternate_first_name, #emergency_relationship_to_patient, #emergency_relationship_address, #emergency_relationship_city, #emergency_relationship_state, #emergency_relationship_zip, #emergency_relationship_phone, #emergency_relationship_alternate_phone').val('');
+        }
+    });
 
         function p_h_address_lockup(arr) {
             let out = "";

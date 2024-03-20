@@ -32,6 +32,7 @@ return new class extends Migration
             $table->unsignedBigInteger('payor_sub_addon_id');
             $table->text('scheduling_notes')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('patient_id')->references('id')->on('patients')->onDelete('cascade');
             $table->foreign('employee_id')->references('id')->on('employees')->onDelete('cascade');

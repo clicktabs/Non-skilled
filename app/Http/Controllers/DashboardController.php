@@ -69,7 +69,7 @@ class DashboardController extends Controller
         $employee_patients='';
         $employee_task='';
 
-        $accountInfo = Account::select('phone', 'zip')->where('user_id', Auth::user()->id)->first();
+        $accountInfo = Account::select('phone', 'zip', 'signature')->where('user_id', Auth::user()->id)->first();
 
         // if($user_employee_dashboard_permission) {
             $employee_patients = [];

@@ -16,6 +16,7 @@ class CreateCMSTable extends Migration
         Schema::create('c_m_s', function (Blueprint $table) {
             $table->id();
             $table->integer('patient_history_id')->nullable();
+            $table->integer('schedule_id')->nullable();
 
             $table->string('hiClaimNo')->nullable();
             $table->date('startOfCareDate')->nullable();

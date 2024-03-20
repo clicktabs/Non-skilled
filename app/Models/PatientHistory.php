@@ -13,4 +13,8 @@ class PatientHistory extends Model
     {
         return $this->belongsTo(Patient::class);
     }
+    public function schedule()
+    {
+        return $this->belongsTo(Schedule::class);
+    }
 }

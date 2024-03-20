@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\EtransferStoreRequest;
 use App\Models\Etransfer;
+use App\Models\QaList;
+use App\Models\Schedule;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\RedirectResponse;
 
@@ -27,6 +29,7 @@ class OasisETransferController extends Controller
     try {
 
         $etransfer = Etransfer::create([
+            'schedule_id' => $request->schedule_id,
             'dopca' => $request->dopca,
             'assessment_month' => $request->assessment_month,
             'assessment_day' => $request->assessment_day,
@@ -58,10 +61,19 @@ class OasisETransferController extends Controller
             'itppu' => $request->itppu,
             'putpmwh' => $request->putpmwh,
         ]);
+        $qaList = QaList::updateOrInsert(
+            ['schedule_id' => $request->schedule_id],
+            ['status' => 0]
+        );
 
-        return redirect()->back()->with('success', 'OASIS E Transfer saved successfully.');
+        $schedule = Schedule::where('id', $request->schedule_id)->first();
+        $schedule->scheduling_status = 'pending';
+        $schedule->save();
+
+        return redirect()->route('patients.qa')->with('success', 'OASIS E Transfer saved successfully.');
     } catch (\Exception $e) {
         // Log the exception or handle it as needed
+        return $e;
         return redirect()->back()->with('error', 'Error saving OASIS E Transfer. Please try again.');
     }
 }

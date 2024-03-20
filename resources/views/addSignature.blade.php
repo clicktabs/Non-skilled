@@ -23,6 +23,12 @@
                 <canvas id="signatureCanvas" width="400" height="200" style="border: 2px solid black"></canvas>
             </div>
             <br>
+            @if (!empty($accountInfo->signature))
+                Current Signature
+                <img id="signatureImage" src="{{$accountInfo->signature}}" style="border: 2px solid black; width: 200px;">
+                <a class="btn btn-primary m-2" href="{{$accountInfo->signature}}" id="downloadSignatureLink" download>Download Signature</a>
+            @endif
+
         </div>
     </div>
     <div class="col-md-6">
@@ -50,6 +56,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         var canvas = document.getElementById('signatureCanvas');
+        
         var signaturePad = new SignaturePad(canvas);
 
         document.getElementById('saveButton').addEventListener('click', function () {
@@ -87,6 +94,15 @@
                     document.getElementById('passwordq').value = '';
                     document.getElementById('pin').value = ''; // Clear pin field
                     document.getElementById('confirmPin').value = '';
+
+                    if(data.signatureUrl){
+                        var signatureImage = document.getElementById('signatureImage');
+                        var downloadLink = document.getElementById('downloadSignatureLink');
+
+                        signatureImage.src = data.signatureUrl;
+                        downloadLink.href = data.signatureUrl;
+                    }
+
                 } else if (data.danger) {
                     console.error(data.danger);
                     toastr.error(data.danger);

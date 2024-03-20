@@ -16,6 +16,7 @@ class CreateFunctionalStatusesTable extends Migration
         Schema::create('functional_statuses', function (Blueprint $table) {
             $table->id();
             $table->integer('patient_history_id')->nullable();
+            $table->integer('schedule_id')->nullable();
 
             $table->integer('grooming')->nullable();
             $table->integer('dressingUpper')->nullable();

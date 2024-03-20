@@ -21,7 +21,7 @@
                 <div class="p-2">
                     <table class="table table-borderless">
                         <tbody>
-                            <tr> 
+                            <tr>
                                 <td>
                                     <select class="form-select" aria-label="Location select">
                                         <option value="">Select Location</option>
@@ -30,7 +30,7 @@
                                         <option value="" selected>Location 3</option>
                                         <option value="">Location 4</option>
                                     </select>
-                                </td> 
+                                </td>
                                 <td>
                                     <select class="form-select" aria-label="Location select">
                                         <option value="">Select Option</option>
@@ -38,7 +38,7 @@
                                         <option value="">Non-skilled</option>
                                         <option value="">skilled</option>
                                     </select>
-                                </td>  
+                                </td>
                                 <td style="max-width: 200px">
                                     <select class="form-select" aria-label="Location select">
                                         <option value="">Select Report Item</option>
@@ -54,16 +54,16 @@
                                         <option value="">Survey Census</option>
                                         <option value="">Plan of Care History</option>
                                         <option value="">Patient 60 day Summary</option>
-                                        <option value="">Patient Orders History</option> 
-                                        <option value="">Patient Discharge List</option> 
-                                        <option value="">Patient Infection List</option> 
-                                        <option value="">Physician Order History by Patient</option> 
-                                        <option value="">Employee Roster</option>  
-                                        <option value="">Employee License</option>  
-                                        <option value="">Expiring Documents</option>  
-                                        <option value="">Employee Task</option>  
-                                        <option value="">Employee Visits</option>  
-                                        <option value="">Employee Birthday</option>                      
+                                        <option value="">Patient Orders History</option>
+                                        <option value="">Patient Discharge List</option>
+                                        <option value="">Patient Infection List</option>
+                                        <option value="">Physician Order History by Patient</option>
+                                        <option value="">Employee Roster</option>
+                                        <option value="">Employee License</option>
+                                        <option value="">Expiring Documents</option>
+                                        <option value="">Employee Task</option>
+                                        <option value="">Employee Visits</option>
+                                        <option value="">Employee Birthday</option>
                                     </select>
                                 </td>
                                 <td style="max-width: 200px">
@@ -108,7 +108,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
+
                     </tbody>
                 </table>
             </div>
@@ -121,14 +121,14 @@
 
     <script type="text/javascript">
     $(function () {
-    
+
         var start_date = moment().subtract(1, 'M');
         var end_date = moment();
         var dateRange = start_date.format('MM/DD/YYYY') + ' - ' + end_date.format('MM/DD/YYYY');
-    
+
         let startDate = '', endDate = '';
         $('#daterange span').html(dateRange);
-    
+
         $('#daterange').daterangepicker(function(start_date, end_date){
             $('#daterange span').html(dateRange);
         });
@@ -138,7 +138,7 @@
 
             table.draw();
         });
-    
+
         var table = $('#daterange_table').DataTable({
             processing : true,
             serverSide : true,
@@ -184,7 +184,7 @@
             var row = table.row( tr );
 
             console.log(row.child);
-        
+
             if ( row.child.isShown() ) {
                 // This row is already open - close it
                 row.child.hide();
@@ -196,7 +196,7 @@
                 tr.addClass('shown');
             }
         } );
-    
+
     });
     </script>
 @endsection

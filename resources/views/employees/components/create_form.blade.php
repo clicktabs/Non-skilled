@@ -1,9 +1,11 @@
-<div>
+
+
+<div class="ttm">
     <form id="employeeForm" name="employeeForm" class="row">
         @csrf
-        <div class="vt card mb-2">
+        <div class="vt card mt-5">
             <div class="card-header text-center !bg-[#4133BF]">
-                <h2 class="gh text-slate-800 text-white">Employee Details</h2>
+                <h2 class="gh text-slate-800 text-white">Add Employee Details</h2>
             </div>
             <div class="avatar-upload">
                 <div class="avatar-edit">
@@ -169,12 +171,12 @@
 
                 <div class="row mt-4">
                     <div class="col">
-                        <label for="zip">Zip: <span class="text-red">*</span></label>
-                        <input id="zip" type="text" class="form-control s ou" name="zip" value="{{ old('zip') }}">
+                        <label for="postcode">Zip: <span class="text-red">*</span></label>
+                        <input id="postcode" type="text" class="form-control s ou" name="zip" value="{{ old('zip') }}">
                     </div>
                     <div class="col">
-                        <label for="county">County: <span class="text-red">*</span></label>
-                        <input id="county" type="text" class="form-control s ou" name="county" value="{{ old('county') }}">
+                        <label for="country">Country: <span class="text-red">*</span></label>
+                        <input id="country" type="text" class="form-control s ou" name="county" value="{{ old('county') }}">
                     </div>
                     <div class="col">
                         <label for="emergency">Emergency Name: </label>

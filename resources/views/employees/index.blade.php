@@ -141,18 +141,6 @@
                         </svg>
                         <span class="hidden trm nq">Add New Employee</span>
                     </a>
-
-{{--                    <form id="search-form" class="flex gap-[20px]" action="{{route('search.employees')}}">--}}
-{{--                        <div>--}}
-{{--                            <label class="filter_label" for="Branch">Branch:</label>--}}
-{{--                            <select name="branch" id="Branch">--}}
-
-{{--                            </select>--}}
-{{--                        </div>--}}
-{{--                        <div>--}}
-{{--                            <button class="btn ho xi ye" type="submit">Search</button>--}}
-{{--                        </div>--}}
-{{--                    </form>--}}
                 </div>
             </div>
 

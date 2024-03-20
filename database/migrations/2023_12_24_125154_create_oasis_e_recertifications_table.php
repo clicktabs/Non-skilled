@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
 
             // Section A: Administrative Information
+            $table->unsignedBigInteger('schedule_id');
             $table->text('dopca', 55)->nullable();
             $table->text('monthAssessment', 55)->nullable();
             $table->text('dayAssessment', 55)->nullable();

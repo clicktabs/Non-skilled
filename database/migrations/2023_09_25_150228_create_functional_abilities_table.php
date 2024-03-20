@@ -16,6 +16,7 @@ class CreateFunctionalAbilitiesTable extends Migration
         Schema::create('functional_abilities', function (Blueprint $table) {
             $table->id();
             $table->integer('patient_history_id')->nullable();
+            $table->integer('schedule_id')->nullable();
             // page 13
             $table->integer('safeCare')->nullable();
             $table->integer('indoorMobility')->nullable();

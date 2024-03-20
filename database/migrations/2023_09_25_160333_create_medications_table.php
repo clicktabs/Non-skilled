@@ -16,6 +16,7 @@ class CreateMedicationsTable extends Migration
         Schema::create('medications', function (Blueprint $table) {
             $table->id();
             $table->string('patient_history_id')->nullable();
+            $table->integer('schedule_id')->nullable();
             $table->string('patient_id')->nullable();
             $table->string('antipsychoticNo')->nullable();
             $table->string('antipsychoticYes')->nullable();

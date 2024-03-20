@@ -16,6 +16,7 @@ class CreatePatientHistoriesTable extends Migration
         Schema::create('patient_histories', function (Blueprint $table) {
             $table->id();
             $table->integer('patient_id')->nullable();
+            $table->integer('schedule_id')->nullable();
 
             $table->text('primary_reason')->nullable();
 

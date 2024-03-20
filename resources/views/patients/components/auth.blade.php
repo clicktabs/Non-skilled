@@ -9,6 +9,72 @@
                 Authorization
             </button>
         </div>
+         <div class="table-responsive">
+                <table class="table mt-4">
+                    <thead class="bg-[#4133BF] text-[#fff] text-center">
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th style="font-weight: bold; text-align: left;">
+                            Active Authorization List
+                            ({{$authorizations->where('status', 0)->count()}})
+                        </th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th colspan="3"></th>
+                    </tr>
+                    <tr>
+                        <th>Authorization #</th>
+                        <th>Payer</th>
+                        <th>Start of Care</th>
+                        <th>End of Care</th>
+                        <th>Service Code</th>
+                        <th>Author Units</th>
+                        <th>Used</th>
+                        <th>Unused</th>
+                        <th colspan="3">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody class="text-center">
+                    @foreach ($authorizations->where('status', 0) as $row)
+                        <tr>
+                            <td>{{ @$row->authorization_number }}</td>
+                            <td>{{ @$row->payer }}</td>
+                            <td>{{ @$row->startofcare }}</td>
+                            <td>{{ @$row->eoc_date }}</td>
+                            <td>{{ @$row->service_code }}</td>
+                            <td>{{ @$row->authorized_units }}</td>
+                            <td>{{ @$row->used_units }}</td>
+                            <td>{{ @$row->unused_units }}</td>
+                            <td>
+                                <button type="button"
+                                        class="btn btn-primary authorization-edit-btn"
+                                        data-authorization-id="{{ $row->id }}">
+                                    Edit
+                                </button>
+                            </td>
+                            <td>
+                                <form
+                                    action="{{ route('authorizations.destroy', $row->id) }}"
+                                    id="authorization-delete-form"
+                                    method="post">
+                                    @method('DELETE')
+                                    @csrf
+                                </form>
+                                <button type="button"
+                                        onclick="event.preventDefault; document.getElementById('authorization-delete-form').submit()"
+                                        class="btn btn-danger">
+                                    Delate
+                                </button>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+        </div>
         <div class="table-responsive">
             <table class="table mt-4">
                 <thead class="bg-[#4133BF] text-[#fff] text-center">
@@ -18,7 +84,7 @@
                     <th></th>
                     <th></th>
                     <th style="font-weight: bold; text-align: left;">
-                        Active Authorization List
+                        In-Active Authorization List
                         ({{$authorizations->where('status', 0)->count()}})
                     </th>
                     <th></th>
@@ -47,8 +113,8 @@
                         <td>{{ @$row->eoc_date }}</td>
                         <td>{{ @$row->service_code }}</td>
                         <td>{{ @$row->authorized_units }}</td>
-                        <td>{{ @$row->used }}</td>
-                        <td>{{ @$row->unused }}</td>
+                        <td>{{ @$row->used_units }}</td>
+                        <td>{{ @$row->unused_units }}</td>
                         <td>
                             <a href="{{ route('authorizations.changeStatus', $row->id) }}"
                                 class="btn btn-{{ $row->status == 0 ? 'success' : 'danger' }}">
@@ -81,78 +147,6 @@
                 </tbody>
             </table>
         </div>
-        <div class="table-responsive">
-                <table class="table mt-4">
-                    <thead class="bg-[#4133BF] text-[#fff] text-center">
-                    <tr>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th style="font-weight: bold; text-align: left;">
-                            Inactive Authorization List
-                            ({{$authorizations->where('status', 0)->count()}})
-                        </th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th colspan="3"></th>
-                    </tr>
-                    <tr>
-                        <th>Authorization #</th>
-                        <th>Payer</th>
-                        <th>Start of Care</th>
-                        <th>End of Care</th>
-                        <th>Service Code</th>
-                        <th>Author Units</th>
-                        <th>Used</th>
-                        <th>Unused</th>
-                        <th colspan="3">Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody class="text-center">
-                    @foreach ($authorizations->where('status', 0) as $row)
-                        <tr>
-                            <td>{{ @$row->authorization_number }}</td>
-                            <td>{{ @$row->payer }}</td>
-                            <td>{{ @$row->startofcare }}</td>
-                            <td>{{ @$row->eoc_date }}</td>
-                            <td>{{ @$row->service_code }}</td>
-                            <td>{{ @$row->authorized_units }}</td>
-                            <td>{{ @$row->used }}</td>
-                            <td>{{ @$row->unused }}</td>
-                            <td>
-                                <a href="{{ route('authorizations.changeStatus', $row->id) }}"
-                                class="btn btn-{{ $row->status == 0 ? 'success' : 'danger' }}">
-                                    {{ $row->status == 0 ? 'Active' : 'Inactive' }}
-                                </a>
-                            </td>
-                            <td>
-                                <button type="button"
-                                        class="btn btn-primary authorization-edit-btn"
-                                        data-authorization-id="{{ $row->id }}">
-                                    Edit
-                                </button>
-                            </td>
-                            <td>
-                                <form
-                                    action="{{ route('authorizations.destroy', $row->id) }}"
-                                    id="authorization-delete-form"
-                                    method="post">
-                                    @method('DELETE')
-                                    @csrf
-                                </form>
-                                <button type="button"
-                                        onclick="event.preventDefault; document.getElementById('authorization-delete-form').submit()"
-                                        class="btn btn-danger">
-                                    Delate
-                                </button>
-                            </td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-        </div>
         <div class="modal fade !max-w-full" id="authorizationModal"
                 tabindex="-1" role="dialog"
                 aria-labelledby="authorizationModal" aria-hidden="true">
@@ -177,11 +171,14 @@
                             <div class="col-md-4">
 
                                 <label for="service_code">Insurance</label>
-                                    <select class="form-select" name="service_code" id="service_code" aria-label="Default select example">
-                                    <option selected>Select Insurance</option>
-                                    <option value=""></option>
+                                    <select name="payer" class="social_insurance form-control" id="payer">
+                                        <option value="">Select Insurance</option>
+                                        @if($social_insurance)
+                                            @foreach($social_insurance as $insurance_type_sub_addons)
+                                                <option value="{{$insurance_type_sub_addons->name}}">{{$insurance_type_sub_addons->name}}</option>
+                                            @endforeach
+                                        @endif
                                     </select>
-
                                 </div>
                             <div class="col-md-4">
                                 <label for="payer"
@@ -214,7 +211,11 @@
                                     <label for="">Service Code</label>
                                     <select class="form-select" name="service_code" id="service_code" aria-label="Default select example">
                                         <option selected>Select Service Code</option>
-                                        <option value=""></option>
+                                        @if($service_codes)
+                                            @foreach($service_codes as $s_code)
+                                                <option value="{{$s_code->code}}">{{$s_code->name}}</option>
+                                            @endforeach
+                                        @endif
                                     </select>
 
                                     </div>

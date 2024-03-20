@@ -40,9 +40,13 @@ if ($routeName != 'dashboard') {
                 </svg>
             </button>
             <!-- Logo -->
-            <a class="block flex items-center gap-[3px]" href="{{ route('dashboard') }}">
+           
+            <a class="block flex items-center gap-[2px]" href="{{ route('dashboard') }}">
                 <img class="w-[50px]" src="{{asset('assets/images/auth-decoration.png')}}" />
-                <h3 class="font-[800] text-[20px] leading-[40px] uppercase text-[#fff]">Click-Tabs</h3>
+                <span>
+                     <p class="font-[500] text-[12px] leading-[20px] text-[#fff]">Skilled Agency Version 1.0 </p>
+                     <p class="font-[800] text-[20px] leading-[40px] uppercase text-[#fff]">Click-Tabs </p>
+                </span>
             </a>
         </div>
 
@@ -314,20 +318,14 @@ if ($routeName != 'dashboard') {
                                      </a>
                                  </li>
                                   @endcan
-                                  <li class="rt ww {{ request()->route()->getName() === 'patients.qa'? 'bg-[#ff0000] active': '' }}">
-                                    <a class="block gq hover--text-slate-200 wt wi ld  p-[10px] py-[5px] rounded-[5px]"
-                                          href="{{ route('patients.qa') }}">
-                                         <span class="text-sm gp ttw tnn text-[#000] wr fw-bolder">QA Center</span>
-                                      </a>
-                                 </li>
-                              
-                               <li class="rt ww {{ request()->route()->getName() === 'patients.recycle-bin'? 'bg-[#ff0000] active': '' }}">
-                                <a class="block gq hover--text-slate-200 wt wi ld  p-[10px] py-[5px] rounded-[5px]"
-                                      href="{{ route('patients.recycle-bin') }}">
-                                     <span class="text-sm gp ttw tnn text-[#000] wr fw-bolder">Recycle Bin</span>
-                                  </a>
-                             </li>
-                           
+
+                               <li class="rt ww {{ request()->route()->getName() === 'patients.qa'? 'bg-[#ff0000] active': '' }}">
+                                  <a class="block gq hover--text-slate-200 wt wi ld  p-[10px] py-[5px] rounded-[5px]"
+                                        href="{{ route('patients.qa') }}">
+                                       <span class="text-sm gp ttw tnn text-[#000] wr fw-bolder">QA Center</span>
+                                    </a>
+                               </li>
+
                             </ul>
                         </div>
                     </li>
@@ -376,8 +374,11 @@ if ($routeName != 'dashboard') {
                         </div>
                     </li>
 
+
+
+
                     <!-- Documentation Section Ends-->
-                    <li class="vn vr rounded-sm n_ ww" x-data="{ open: false }">
+                    {{-- <li class="vn vr rounded-sm n_ ww" x-data="{ open: false }">
                         <a class="block gj xc ld wt wi" href="#0"
                             @click.prevent="sidebarExpanded ? open = !open : sidebarExpanded = true">
                             <div class="flex items-center fe">
@@ -417,8 +418,9 @@ if ($routeName != 'dashboard') {
                                 @endcan
                             </ul>
                         </div>
-                    </li>
+                    </li> --}}
                     @endcanany
+
                     @canany(['referral-contacts-create', 'referral-contacts-delete', 'referral-contacts-edit', 'referral-contacts-show'])
                     <!-- Social workers -->
                     <li class="vn vr rounded-sm n_ ww" x-data="{ open: false }">
@@ -501,16 +503,8 @@ if ($routeName != 'dashboard') {
                                     class="rt ww {{ request()->route()->getName() === 'schedule.calendar'? 'bg-[#ff0000] active': '' }}">
                                     <a class="block gq hover--text-slate-200 wt wi ld  p-[10px] py-[5px] rounded-[5px]"
                                         href="{{ route('schedule.calendar') }}">
-                                        <span class="text-sm gp ttw tnn text-[#000] wr fw-bolder">Monthly Schedules</span>
-                                    </a>
-                                </li>
-                                @endcan
-                                @can('scheduled-dairly')
-                                <li
-                                    class="rt ww {{ request()->route()->getName() === 'schedule.calendar'? 'bg-[#ff0000] active': '' }}">
-                                    <a class="block gq hover--text-slate-200 wt wi ld  p-[10px] py-[5px] rounded-[5px]"
-                                        href="">
-                                        <span class="text-sm gp ttw tnn text-[#000] wr fw-bolder">Dairly Schedules</span>
+                                        <span class="text-sm gp ttw tnn text-[#000] wr fw-bolder">Schedules Calender </span>
+                                        <span class="text-sm gp ttw tnn text-[#000] wr fw-bolder">Schedules Calender</span>
                                     </a>
                                 </li>
                                 @endcan
@@ -570,40 +564,95 @@ if ($routeName != 'dashboard') {
                                 </li>
                                 @endcan
                                 @can('attendance_list')
-                                <li class="rt ww {{ request()->route()->getName() === 'employee-attendance-list'? 'bg-[#ff0000] active': '' }}">
+                                {{-- <li class="rt ww {{ request()->route()->getName() === 'employee-attendance-list'? 'bg-[#ff0000] active': '' }}">
                                     <a class="block gq hover--text-slate-200 wt wi ld  p-[10px] py-[5px] rounded-[5px]"
                                         href="{{ route('employee-attendance-list') }}">
                                         <span class="text-sm gp ttw tnn text-[#000] wr fw-bolder">Attendance List</span>
                                     </a>
-                                </li>
+                                </li> --}}
                                 @endcan
                                 @can('request_leave')
-                                <li class="rt ww {{ request()->route()->getName() === 'leave-apply-form'? 'bg-[#ff0000] active': '' }}">
+                                {{-- <li class="rt ww {{ request()->route()->getName() === 'leave-apply-form'? 'bg-[#ff0000] active': '' }}">
                                     <a class="block gq hover--text-slate-200 wt wi ld  p-[10px] py-[5px] rounded-[5px]"
                                         href="{{ route('leave-apply-form') }}">
                                         <span class="text-sm gp ttw tnn text-[#000] wr fw-bolder">Request Leave</span>
                                     </a>
-                                </li>
+                                </li> --}}
                                 @endcan
                                 @can('leave_list')
-                                <li class="rt ww {{ request()->route()->getName() === 'leave-list'? 'bg-[#ff0000] active': '' }}">
+                                {{-- <li class="rt ww {{ request()->route()->getName() === 'leave-list'? 'bg-[#ff0000] active': '' }}">
                                     <a class="block gq hover--text-slate-200 wt wi ld  p-[10px] py-[5px] rounded-[5px]"
                                         href="{{ route('leave-list') }}">
                                         <span class="text-sm gp ttw tnn text-[#000] wr fw-bolder">Leave List</span>
                                     </a>
-                                </li>
+                                </li> --}}
                                 @endcan
                                 @can('request_time_off')
-                                <li class="rt ww {{ request()->route()->getName() === 'request-time-off-form'? 'bg-[#ff0000] active': '' }}">
+                                {{-- <li class="rt ww {{ request()->route()->getName() === 'request-time-off-form'? 'bg-[#ff0000] active': '' }}">
                                     <a class="block gq hover--text-slate-200 wt wi ld  p-[10px] py-[5px] rounded-[5px]" href="{{ route('request-time-off-form') }}">
                                         <span class="text-sm gp ttw tnn text-[#000] wr fw-bolder">Request Time off</span>
                                     </a>
-                                </li>
+                                </li> --}}
                                 @endcan
                                 @can('request_time_off_list')
-                                <li class="rt ww {{ request()->route()->getName() === 'request-time-off-list'? 'bg-[#ff0000] active': '' }}">
+                                {{-- <li class="rt ww {{ request()->route()->getName() === 'request-time-off-list'? 'bg-[#ff0000] active': '' }}">
                                     <a class="block gq hover--text-slate-200 wt wi ld  p-[10px] py-[5px] rounded-[5px]" href="{{ route('request-time-off-list') }}">
                                         <span class="text-sm gp ttw tnn text-[#000] wr fw-bolder">Request Time off List</span>
+                                    </a>
+                                </li> --}}
+                                @endcan
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="vn vr rounded-sm n_ ww" x-data="{ open: false }">
+                        <a class="block gj xc ld wt wi" href="#0"
+                            @click.prevent="sidebarExpanded ? open = !open : sidebarExpanded = true">
+                            <div class="flex items-center fe">
+                                <div class="flex items-center">
+                                    <svg class="ub so oi" viewBox="0 0 24 24">
+                                        <path class="du gq"
+                                            d="M13 6.068a6.035 6.035 0 0 1 4.932 4.933H24c-.486-5.846-5.154-10.515-11-11v6.067Z">
+                                        </path>
+                                        <path class="du gz"
+                                            d="M18.007 13c-.474 2.833-2.919 5-5.864 5a5.888 5.888 0 0 1-3.694-1.304L4 20.731C6.131 22.752 8.992 24 12.143 24c6.232 0 11.35-4.851 11.857-11h-5.993Z">
+                                        </path>
+                                        <path class="du g_"
+                                            d="M6.939 15.007A5.861 5.861 0 0 1 6 11.829c0-2.937 2.167-5.376 5-5.85V0C4.85.507 0 5.614 0 11.83c0 2.695.922 5.174 2.456 7.17l4.483-3.993Z">
+                                        </path>
+                                    </svg>
+                                    <span class="text-sm gp ml-3 ttw tnn wr text-[#000] fw-bolder">Trash</span>
+                                </div>
+                                <!-- Icon -->
+                                <div class="flex ub nq ttw tnn 2xl:opacity--100 wr">
+                                    <svg class="w-3 h-3 ub nz du text-[#000]" :class="open ? 'as' : 'ao'" viewBox="0 0 12 12">
+                                        <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="tex ttj 2xl:block">
+                            <ul class="me re hidden" :class="open ? '!block' : 'hidden'">
+                                @can('clock_in')
+                                <li class="rt ww">
+                                    <a class="block gq hover--text-slate-200 wt wi ld  p-[10px] py-[5px] rounded-[5px]"
+                                        href="{{ route('patients.delete.trash') }}">
+                                        <span class="text-sm gp ttw tnn text-[#000] wr fw-bolder">Patients Trash</span>
+                                    </a>
+                                </li>
+                                @endcan
+                                @can('clock_in')
+                                <li class="rt ww">
+                                    <a class="block gq hover--text-slate-200 wt wi ld  p-[10px] py-[5px] rounded-[5px]"
+                                        href="{{ route('employee.delete.trash') }}">
+                                        <span class="text-sm gp ttw tnn text-[#000] wr fw-bolder">Employee Trash</span>
+                                    </a>
+                                </li>
+                                @endcan
+                                @can('clock_in')
+                                <li class="rt ww">
+                                    <a class="block gq hover--text-slate-200 wt wi ld  p-[10px] py-[5px] rounded-[5px]"
+                                        href="{{ route('schedule.delete.trash') }}">
+                                        <span class="text-sm gp ttw tnn text-[#000] wr fw-bolder">Schedule Trash</span>
                                     </a>
                                 </li>
                                 @endcan

@@ -16,6 +16,7 @@ class CreateHearingVisionsTable extends Migration
         Schema::create('hearing_visions', function (Blueprint $table) {
             $table->id();
             $table->integer('patient_history_id')->nullable();
+            $table->integer('schedule_id')->nullable();
 
             $table->boolean('hearingAdequate')->nullable();
             $table->boolean('hearingMinimal')->nullable();

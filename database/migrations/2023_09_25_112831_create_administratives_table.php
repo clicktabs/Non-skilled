@@ -16,6 +16,7 @@ class CreateAdministrativesTable extends Migration
         Schema::create('administratives', function (Blueprint $table) {
             $table->id();
             $table->integer('patient_history_id')->nullable();
+            $table->integer('schedule_id')->nullable();
             
             $table->text('nipNumber')->nullable();
             $table->text('ukUnknown')->nullable();

@@ -69,8 +69,7 @@
         <div class="main_content_nav mt-[-30px]">
             <ul>
                 <li>
-                    <a class="add_patient_status" tabindex="0"
-                       aria-controls="matching_table" type="button"><span>Patient Status</span></a>
+                    <a class="add_patient_status" tabindex="0" aria-controls="matching_table" type="button"><span>Patient Status</span></a>
                 </li>
                 <li><a href="#tub-scheduledTask">Scheduled Task</a></li>
                 {{-- <li><a href="#tub-matching">Matching</a></li> --}}

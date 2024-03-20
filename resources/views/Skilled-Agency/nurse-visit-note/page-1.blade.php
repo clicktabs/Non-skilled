@@ -10,7 +10,7 @@
          </div>
       </div>
    </nav>
-   <div class="container vt">
+   <div class="container">
       <div class="form-holder pt-5 pb-5">
          <div class="form-heading">
             <h1 class="text-end text-uppercase">NURSING VISIT NOTE</h1>

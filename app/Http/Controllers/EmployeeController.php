@@ -53,6 +53,13 @@ class EmployeeController extends Controller
         return view('employees.index', compact('agency_branch', 'employees', 'admission_source', 'pay_type', 'billing_code', 'service_code', 'jobs'));
     }
 
+    public function employeeIndex()
+    {
+        $softDeletedEmployees = Employee::onlyTrashed()->get();
+
+        return view('employees.employee-index', compact('softDeletedEmployees'));
+    }
+
     public function create()
     {
         $this->organization_id = Auth::user()->organization_id;
@@ -175,14 +182,27 @@ class EmployeeController extends Controller
         return view('employees.create',  compact('agency_branch', 'admission_source', 'jobs'));
     }
 
-    public function destroy($id): \Illuminate\Http\RedirectResponse
+    public function destroy($id)
     {
-        $user = Employee::find($id);
-        if($user) {
-            $user->delete($id);
-            return redirect()->route('employees.index')->with('success', 'Employee was deleted successfully. ');
+        $employee = Employee::find($id);
+
+        if ($employee) {
+            $employee->delete();
+            return redirect()->route('employees.index')->with('success', 'Employee was soft deleted successfully.');
         } else {
-            return redirect()->route('employees.index')->with('error', 'Employee was not deleted successfully. ');
+            return redirect()->route('employees.index')->with('error', 'Employee was not found.');
+        }
+    }
+
+    public function restore($id)
+    {
+        $employee = Employee::withTrashed()->find($id);
+
+        if ($employee) {
+            $employee->restore();
+            return redirect()->route('employees.index')->with('success', 'Employee was restored successfully.');
+        } else {
+            return redirect()->route('employees.index')->with('error', 'Employee was not found.');
         }
     }
 

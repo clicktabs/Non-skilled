@@ -94,8 +94,8 @@
                                                                                     , {{$employee->last_name}}</h1>
                                                                             </div>
                                                                             <div
-                                                                                class="patient_info_table table-responsive ">
-                                                                                <table >
+                                                                                class="patient_info_table table-responsive">
+                                                                                <table>
                                                                                     <tbody>
                                                                                     <tr>
                                                                                         <td>Employee ID:</td>

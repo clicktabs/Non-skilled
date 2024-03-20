@@ -16,6 +16,7 @@ class CreatePreferencesTable extends Migration
         Schema::create('preferences', function (Blueprint $table) {
             $table->id();
             $table->integer('patient_history_id')->nullable();
+            $table->integer('schedule_id')->nullable();
             $table->integer('livesAlone')->nullable();
             $table->integer('livesWithOthers')->nullable();
             $table->integer('supervisionSafety')->nullable();

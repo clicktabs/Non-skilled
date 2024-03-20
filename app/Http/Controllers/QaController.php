@@ -90,22 +90,23 @@ class QaController extends Controller
     }
 
     public function updateStatus(Request $request)
-    {
-        $status = $request->input('status');
-        $qa_id = $request->input('qa_id');
+{
+    $status = $request->status;
+    $qa_id = $request->qa_id;
+    $note = $request->note;
 
-        $qaList = QaList::updateOrInsert(
-            ['schedule_id' => $qa_id],
-            ['status' => $status]
-        );
-        if ($status == 1) {
-            return response()->json(['success' => 'Approve Successfully!']);
-        } elseif($status == 2) {
-            return response()->json(['warning' => 'Rejected!']);
-        }else {
-            return response()->json(['danger' => 'Something went wrong!']);
-        }
+    $qaList = QaList::updateOrInsert(
+        ['schedule_id' => $qa_id],
+        ['status' => $status, 'note' => $note] // Pass note along with status
+    );
 
-
+    if ($status == 1) {
+        return response()->json(['success' => 'Approve Successfully!']);
+    } elseif($status == 2) {
+        return response()->json(['warning' => 'Rejected!']);
+    } else {
+        return response()->json(['danger' => 'Something went wrong!']);
     }
+}
+
 }

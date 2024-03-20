@@ -36,21 +36,9 @@
             <div class="col-md-6">
                 <label for="authorized_units" class="py-1">authorized_units<span class="text-red">*</span></label>
                 <input type="text" value="{{ $authorization->authorized_units }}" class="form-control"
-                    id="authorized_units" name="authorized_units">
+                    id="authorized_units" name="authorized_units" readonly="">
             </div>
         </div>
-        {{-- <div class="row">
-            <div class="col-md-6">
-                <label for="used" class="py-1">used<span class="text-red">*</span></label>
-                <input type="text" value="{{ $authorization->used }}" class="form-control" id="used"
-                    name="used">
-            </div>
-            <div class="col-md-6">
-                <label for="unused" class="py-1">unused<span class="text-red">*</span></label>
-                <input type="text" value="{{ $authorization->unused }}" class="form-control" id="unused"
-                    name="unused">
-            </div>
-        </div> --}}
 
         <div class="row mt-5">
             <div class="col-md-6"></div>

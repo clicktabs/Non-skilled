@@ -77,31 +77,45 @@
 
             <div class="row mt-2">
                 <div class="col-md-3">
-                    <label for="insurance_medicaid_member_id"><span class="text-green">(M0065)</span>Medicaid Member ID: </label>
+                    <label for="insurance_medicaid_member_id"><span class="text-green">(M0065)</span>Medicaid ID: </label>
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-3">
                     <input id="insurance_medicaid_member_id" type="text" class="form-control s ou"
                            name="insurance_medicaid_member_id" value="{{ old('insurance_medicaid_member_id') }}">
                 </div>
-                <div class="col-md-4">
-                    <input type="checkbox" value="N/A" name="insurance_medicaid_member_id_na" id="insurance_medicaid_member_id_na">
-                    <label for="insurance_medicaid_member_id_na"> NA - No Medicaid</label>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <input type="checkbox" value="N/A" name="insurance_medicaid_member_id_na" id="insurance_medicaid_member_id_na">
+                              <label for="insurance_medicaid_member_id_na">No Medicaid</label>
+                        </div>
+                        <div class="col-sm-7">
+                            <input type="checkbox" value="N/A" name="insurance_medicaid_member_id_na" id="insurance_medicaid_member_id_na">
+                            <label for="insurance_medicare_member_id_check_na">Check Eligibility Status</label>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="row mt-2">
                 <div class="col-md-3">
-                    <label for="insurance_medicare_member_id">
-                        <span class="text-green">(M0063)</span>
-                        Medicare Member ID: </label>
+                    <label for="insurance_medicare_member_id"><span class="text-green">(M0063)</span>Medicare ID: </label>
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-3">
                     <input id="insurance_medicare_member_id_check" type="text" class="form-control s ou"
                            name="insurance_medicare_member_id_check"
                            value="{{ old('insurance_medicare_member_id_check') }}">
                 </div>
-                <div class="col-md-4">
-                    <input type="checkbox" value="N/A" name="insurance_medicare_member_id_check_na" id="insurance_medicare_member_id_check_na">
-                    <label for="insurance_medicare_member_id_check_na"> NA - No Medicare</label>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <input type="checkbox" value="N/A" name="insurance_medicare_member_id_check_na" id="insurance_medicare_member_id_check_na">
+                            <label for="insurance_medicare_member_id_check_na">No Medicare</label>
+                        </div>
+                        <div class="col-sm-7">
+                            <input type="checkbox" value="N/A" name="insurance_medicare_member_id_check_na" id="insurance_medicare_member_id_check_na">
+                            <label for="insurance_medicare_member_id_check_na">Check Eligibility Status</label>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="row mt-2">
@@ -233,7 +247,7 @@
                 </div>
                 <div class="col-md-5">
                     <input id="other_specify_value" type="text" class="form-control s ou"
-                           name="insurance_current_payment_source[]" value="other_specify_value">
+                           name="insurance_current_payment_source[]" value="">
                 </div>
             </div>
             <div class="row mt-2">
@@ -247,7 +261,7 @@
             </div>
         </div>
         <div class="col">
-            <button type="submit" class="btn btn-primary !bg-[#6366f1] !text-white">Save and Admit</button>
+            <button type="submit" class="btn btn-primary !bg-[#6366f1] !text-white mt-2 ml-2 mb-2">Save and Admit</button>
         </div>
     </div>
 </form>

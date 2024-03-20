@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Patient extends Model
 {
-    // use SoftDeletes;
+    use SoftDeletes;
 
     protected $guarded = [];
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];

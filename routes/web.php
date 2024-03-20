@@ -164,7 +164,6 @@ use App\Http\Controllers\InfectionController;
 use App\Http\Controllers\OasisEDealthController;
 use App\Http\Controllers\OasisERecertificationController;
 use App\Http\Controllers\ResumptionOfCareController;
-use App\Http\Controllers\RecyclebinController;
 
 
 
@@ -388,8 +387,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('employees', EmployeeController::class);
 
-    //Recycle Bin
-    Route::get('patients-recycle-bin', [RecyclebinController::class, 'index'])->name('patients.recycle-bin');
+    //patient trash
+    Route::get('/patient/trash', [PatientController::class, 'patientIndex'])->name('patients.delete.trash');
+    Route::patch('/patient/{patient}/restore', [PatientController::class, 'restore'])->name('patients.restore');
+
+    //employee trash
+    Route::get('/employee/trash', [EmployeeController::class, 'employeeIndex'])->name('employee.delete.trash');
+    Route::patch('/employee/{id}/restore', [EmployeeController::class, 'restore'])->name('employee.restore');
+
+    //schedule trash
+    Route::get('/schedule/trash', [ScheduleCalendar::class, 'scheduleIndex'])->name('schedule.delete.trash');
+    Route::patch('/schedule/{id}/restore', [ScheduleCalendar::class, 'restore'])->name('schedule.restore');
 
     // QA
     Route::get('/patients-qa', [QaController::class, 'index'])->name('patients.qa');
@@ -414,6 +422,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Patient physician List
     Route::get('/patient-physician/ajax/pull', [PhysicianController::class, 'PatientPhysicianAjax'])->name('patients.physician.ajax');
     Route::post('/patient-physician/print', [PDFController::class, 'PatientPhysician'])->name('patients.physician.print');
+
+    // Physician List
+    Route::get('/physician/ajax/pull', [PhysicianController::class, 'PhysicianAjax'])->name('physician.ajax');
+    Route::post('/physician/print', [PDFController::class, 'Physician'])->name('physician.print');
 
     // Patient Start of Care List
     Route::get('/patient-startofcare/ajax/pull', [PatientEpisodeManagerController::class, 'PatientStartOfCareAjax'])->name('patients.startofcare.ajax');
@@ -595,6 +607,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/schedule/employee-wise/get-schedule', [ScheduleCalendar::class, 'getEmployeeWiseSchedule']);
     Route::get('/schedule/user/get-schedule', [ScheduleCalendar::class, 'getUserSchedule']);
     Route::get('/task-form/{data}', [ScheduleCalendar::class, 'formOpen'])->name('skilled-agency.task-form');
+    Route::get('/recycle-forms/{data}', [ScheduleCalendar::class, 'formRecycle'])->name('skilled-agency.recycle-form');
+    Route::get('/recycle-data', [ScheduleCalendar::class, 'recycleData'])->name('skilled-agency.recycle-data');
     Route::get('/schedule/get-patient-schedule', [ScheduleCalendar::class, 'getPatientSchedule']);
     Route::get('/schedule/get-today-schedule', [ScheduleCalendar::class, 'getAllTodaySchedule']);
     Route::get('/schedule/get-week-schedule', [ScheduleCalendar::class, 'getAllWeekSchedule']);

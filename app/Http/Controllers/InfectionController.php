@@ -12,7 +12,7 @@ class InfectionController extends Controller
 {
     public function index()
     {
-        return view('skilled-agency.infections.infection-control');
+        return view('Skilled-Agency.infections.infection-control');
     }
 
     public function store(InfectionControlRequest $request)
@@ -20,7 +20,7 @@ class InfectionController extends Controller
         $validatedData = $request->validated();
         $infectionReport = InfectionControl::create($validatedData);
 
-        return redirect()->route('skilled-agency.infection-control.index')->with('success', 'Infection Added successfully.');
+        return redirect()->route('Skilled-Agency.infection-control.index')->with('success', 'Infection Added successfully.');
     }
 
     public function PatientInfectionListAjax(Request $request) {

@@ -16,6 +16,7 @@ class CreateSpecialTreatmentsTable  extends Migration
         Schema::create('special_treatments', function (Blueprint $table) {
             $table->id();
             $table->integer('patient_history_id')->nullable();
+            $table->integer('schedule_id')->nullable();
 
             $table->boolean('chemotherapy')->nullable();
             $table->boolean('iv')->nullable();

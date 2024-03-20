@@ -9,7 +9,7 @@
 
 <main>
 
-   <div class="container">
+   <div class="container">  
       <div class="vt p-2">@include('layouts.company_info')</div>
       <div class="form-holder pt15 pb-5">
          <form action="{{route('nonskilled.hhaVisitNoteUpdate')}}"  method="POST">
@@ -69,7 +69,7 @@
 
                            <!-- VITALS/RESULTS -->
                            <tr>
-                              <td colspan="3" class="bg-black text-white pt-1 pb-1"><b class="bg-black text-white fw-bolder p-2">VITALS/RESULTS</b></td>
+                              <td colspan="3" class="!bg-[#4133BF] text-white fw-bolder p-2"><b class="!bg-[#4133BF] text-white fw-bolder p-2">VITALS/RESULTS</b></td>
                            </tr>
                            <tr>
                             <td>

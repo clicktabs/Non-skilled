@@ -23,8 +23,8 @@
                 </div>
             </div>
         </div>
-
-        {{-- @php
+{{-- 
+        @php
             $case_manager_info = App\Models\Employee::select('id', 'first_name', 'last_name')
                     ->where('id', '=', $patient->caseManage->case_managers)
                     ->first();

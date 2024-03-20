@@ -16,6 +16,7 @@ class CreateDemographicsTable extends Migration
         Schema::create('demographics', function (Blueprint $table) {
             $table->id();
             $table->integer('patient_history_id')->nullable();
+            $table->integer('schedule_id')->nullable();
             // page 2
             $table->boolean('hispanic')->nullable();
             $table->boolean('mexican')->nullable();

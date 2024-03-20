@@ -1,5 +1,5 @@
 <div class="card mb-2 tabcontent" id="physician">
-    <div class="card-header text-center bg-dark">
+    <div class="card-header text-center #4133BF">
         <h2 class="gh text-slate-800 text-white">Physician</h2>
     </div>
     <div class="card-body">

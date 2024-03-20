@@ -16,6 +16,7 @@ class CreateSkinConditionsTable extends Migration
         Schema::create('skin_conditions', function (Blueprint $table) {
             $table->id();
             $table->integer('patient_history_id')->nullable();
+            $table->integer('schedule_id')->nullable();
             $table->integer('patientUnhealedPressureUlcer')->nullable();
             $table->boolean('recentSocAssessment')->nullable();
 

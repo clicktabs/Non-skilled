@@ -347,6 +347,32 @@ class PhysicianController extends Controller
         }
     }
 
+    public function PhysicianAjax(Request $request) {
+        if($request->ajax())
+        {
+            $data= Physician::all();
+
+            return DataTables::of($data)->addIndexColumn()
+            ->addColumn('id', function ($physician) {
+                return '<input type="checkbox" name="physician_ids[]" value="'.$physician->id.'">';
+             })
+             ->addColumn('name', function ($physician) {
+                return $physician->first_name . ' ' . $physician->last_name;
+             })
+             ->addColumn('npi', function ($physician) {
+                return $physician->npi_number;
+             })
+             ->addColumn('address', function ($physician) {
+                return $physician->address_line_1;
+             })
+             ->addColumn('phone', function ($physician) {
+                return $physician->primary_phone;
+             })
+             ->rawColumns(['id', 'name', 'npi', 'address', 'phone'])
+            ->make(true);
+        }
+    }
+
     public function PatientPlanOfCareAjax(Request $request) {
         if($request->ajax())
         {

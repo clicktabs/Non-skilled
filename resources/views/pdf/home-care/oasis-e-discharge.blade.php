@@ -1679,7 +1679,7 @@
                         <td rowspan="2"><b>Living Arrangement</b></td>
                         <td colspan="5" class="text-center"><b>Availability of Assistance</b></td>
                         </tr>
-                        
+
                         <tr>
                         <td><b>Around the Clock</b></td>
                         <td><b>Regular Daytime</b></td>
@@ -1688,7 +1688,7 @@
                         <td><b>No Assistance Available</b></td>
                         </tr>
                         </thead>
-                        
+
                         <tbody>
                         <tr>
                         <td>A. <b>Patient lives alone</b></td>
@@ -1708,8 +1708,8 @@
                         <label class="form-check-label"><input {{ $preference->livesAlone===5 ? 'checked' : '' }} style="position: relative;top:3px;" type="radio" class="form-check-input"> 05</label>
                         </td>
                         </tr>
-                        
-                        
+
+
                         <tr>
                         <td>B. <b>Patient lives with other person(s) in the home</b></td>
                         <td>
@@ -1746,7 +1746,7 @@
                         <label class="form-check-label"><input {{ $preference->livesInCongregate===15 ? 'checked' : '' }} style="position: relative;top:3px;" type="radio" class="form-check-input"> 15</label>
                         </td>
                         </tr>
-                        
+
                         </tbody>
                         </table>
                 </td>
@@ -1975,7 +1975,7 @@
                     <label><input style="position: relative;top:3px;" {{ $preference->platsp===0 ? 'checked' : '' }} type="radio" class="form-check-input"> No</label>
                     <label><input style="position: relative;top:3px;" {{ $preference->platsp===1 ? 'checked' : '' }} type="radio" class="form-check-input"> Yes</label>
                     <span style="font-weight: 500;">If yes, explain:</span><br>
-                    {!! $preference->platspExplain !!}                    
+                    {!! $preference->platspExplain !!}
                 </td>
             </tr>
 
@@ -1989,7 +1989,7 @@
                     <label><input style="position: relative;top:3px;" {{ $preference->ifhhaOo===0 ? 'checked' : '' }} type="radio" class="form-check-input"> No</label>
                     <label><input style="position: relative;top:3px;" {{ $preference->ifhhaOo===1 ? 'checked' : '' }} type="radio" class="form-check-input"> Yes</label>
                     <span style="font-weight: 500;">Reason for need:</span><br>
-                    {!! $preference->ifhhaExplain !!}                    
+                    {!! $preference->ifhhaExplain !!}
                 </td>
             </tr>
         </table>
@@ -2042,7 +2042,7 @@
                         <label><input style="position: relative;top:3px;" {{ $preference->spi===1 ? 'checked' : '' }} type="radio" class="form-check-input"> No</label>
                         <label><input style="position: relative;top:3px;" {{ $preference->spi===2 ? 'checked' : '' }} type="radio" class="form-check-input"> Yes</label>
                     </div>
-                    
+
                     <div>
                         <span style="font-weight: 500">Comments:</span><br>
                         {!! $preference->spiComments !!}
@@ -2308,7 +2308,7 @@
                     </ol>
                 </td>
             </tr>
-            
+
             <tr>
                 <td colspan="2" style="border-top: 1px solid #000;">
                     <div>
@@ -2320,7 +2320,7 @@
                         <label><input style="position: relative;top:3px;" {{ $functionalSts->Orderobtained===1 ? 'checked' : '' }} type="radio" class="form-check-input"> Yes</label>
                         <label><input style="position: relative;top:3px;" {{ $functionalSts->Orderobtained===0 ? 'checked' : '' }} type="radio" class="form-check-input"> No</label>
                     </div>
-                    
+
                     <div class="mt-1">
                         <span style="font-weight: 500">Reason for need:</span><br>
                         {!! $functionalSts->reasonforNeed !!}
@@ -2405,7 +2405,7 @@
                             </td>
                         </tr>
                     </table>
-    
+
                     <table class="table table-bordered m-0">
                         <tr>
                             <td class="bg-light text-center"><b>I</b></td>
@@ -2473,7 +2473,7 @@
                             </td>
                         </tr>
                     </table>
-    
+
                     <table class="table table-bordered m-0">
                         <tr>
                             <td class="bg-light text-center"><b>I</b></td>
@@ -2593,7 +2593,7 @@
                             <td>Scoot/Bridge</td>
                             <td>{{ $functionalSts->scoot }}</td>
                         </tr>
-    
+
                         <!-- TRANSFERS -->
                         <tr>
                             <td class="text-center bg-black text-white" rowspan="5" style="width: 30px;"><span style="font-size: 11px">TRANSFERS</span></td>
@@ -2617,7 +2617,7 @@
                             <td>Auto</td>
                             <td>{{ $functionalSts->auto }}</td>
                         </tr>
-    
+
                         <!-- STAIRS -->
                         <tr>
                             <td class="text-center bg-black text-white" rowspan="4" style="width: 30px;"><span style="font-size: 11px">STAIRS</span></td>
@@ -2646,7 +2646,7 @@
                             <td>Quantity:</td>
                             <td class="bg-secondary">{{ $functionalSts->quality2 }}</td>
                         </tr>
-    
+
                         <!-- W/C/ SKILLS -->
                         <tr>
                             <td class="text-center bg-black text-white" rowspan="4" style="width: 30px;"><span  style="font-size: 11px">W/C/ SKILLS</span></td>
@@ -2666,7 +2666,7 @@
                             <td>Locks</td>
                             <td>{{ $functionalSts->locks }}</td>
                         </tr>
-    
+
                         <!-- COMMUNITY MOBILITY -->
                         <tr>
                             <td class="text-center bg-black text-white" rowspan="2" style="width: 30px;"><span class="text-center" style="font-size: 10px;line-height: 12px;top: 30px;">COMMUNITY<br>MOBILITY</span></td>
@@ -2678,7 +2678,7 @@
                             <td>Uneven Surface</td>
                             <td>{{ $functionalSts->uneven }}</td>
                         </tr>
-    
+
                         <tr>
                             <td colspan="4">
                                 <p class="mt-0 mb-1">Plan/Comments re: independence and balance:</p>
@@ -2845,7 +2845,7 @@
                             </td>
                         </tr>
                     </table>
-    
+
                     <table class="table table-bordered m-0">
                         <tr>
                             <td class="bg-light text-center"><b>I</b></td>
@@ -2956,7 +2956,7 @@
                     </div>
 
                     <p class="mb-1 mt-1">When standing does patient appear to have:</p>
-                        
+
                     <div><input type="checkbox" {{ $functionalSts->standingna ? 'checked' : '' }} class="form-check-input"> <b>N/A</b> patient can’t stand</div>
                     <div><input type="checkbox" {{ $functionalSts->exaggerated ? 'checked' : '' }} class="form-check-input"> Exaggerated forward curve of lumbar region</div>
                     <div>
@@ -3225,7 +3225,7 @@
                             <td>{!! $functionalSts->homeSaftyComment !!}</td>
                         </tr>
                     </table>
-                </td>             
+                </td>
             </tr>
         </table>
     </div>
@@ -3384,7 +3384,7 @@
                         <p class="mt-0 mb-1">If Yes, recommendations:</p>
                         {!! $functionalSts->yesRecommendations !!}
                     </div>
-    
+
                     <div class="mt-3">
                         <p class="mt-0 mb-1">Comments/Other Impairments Noted:</p>
                         {!! $functionalSts->imparirmentsNotes !!}
@@ -3759,8 +3759,8 @@
                             <td class="pb-0 pt-0"><label><input {{ $functionalAbl->bowelBladder?'checked':'' }} type="checkbox"
                                         class="form-check-input">
                                     Bowel/Bladder (Incontinence)</label></td>
-            
-            
+
+
                             <td class="pb-0 pt-0"><label><input {{ $functionalAbl->endurance?'checked':'' }} type="checkbox"
                                         class="form-check-input">
                                     Endurance</label></td>
@@ -3830,10 +3830,10 @@
                                     problem could be a disease process, for example: osteoporosis, tetanus or cancer) If yes, what
                                     happened:</label><br>
                                     {!! $functionalAbl->yesNote !!}
-                            
+
                                 <p style="font-weight: 500" class="mb-0">Treatment received:</p>
                                 {!! $functionalAbl->treatmentReceived !!}
-                            
+
                                 <div class="d-block mt-2">
                                     <span style="font-weight: 500">Did the patient have any after effects/residual problems from the problem or injury reported?</span><br>
                                     <label style="margin-left: 10px;"><input style="position: relative;top:4px" {{ $functionalAbl->hparp===2?'checked':'' }} type="radio" value="2" name="hpapp" class="form-check-input">
@@ -3842,7 +3842,7 @@
                                         yes, what happened:</label><br>
                                     {!! $functionalAbl->hpapp2note !!}
                                 </div>
-                            
+
                                 <div class="d-block mt-2">
                                     <p style="font-weight: 500" class="mb-1 mt-0">Patient has pain associated with:</p>
                                     <div class="ms-2">
@@ -3854,7 +3854,7 @@
                                             <input {{ $functionalAbl->painBones?'checked':'' }} type="checkbox" name="painBones" class="form-check-input">bones?</label>
                                     </div>
                                 </div>
-                            
+
                                 <div class="d-block mt-2">
                                     <span style="font-weight: 500">Patient has:</span>
                                     <label style="margin-left: 10px;">
@@ -3878,7 +3878,7 @@
                                             ROM</label>
                                     </div>
                                 </div>
-                            
+
                                 <div class="d-block mt-2">
                                     <span style="font-weight: 500">Motor changes:</span>
                                     <label style="margin-left: 10px;"><input style="position: relative;top:4px" {{ $functionalAbl->motorChanges===0?'checked':'' }} type="radio" name="motorChanges" class="form-check-input"
@@ -3891,7 +3891,7 @@
                                     <label style="margin-left: 10px;">
                                         <input {{ $functionalAbl->motorChangeGross?'checked':'' }} type="checkbox" name="motorChangeGross" class="form-check-input">gross</label>
                                 </div>
-                            
+
                                 <div class="d-block mt-2">
                                     <span style="font-weight: 500">Hand grips:</span>
                                     <label style="margin-left: 10px;"><input style="position: relative;top:4px" {{ $functionalAbl->handGrips===1?'checked':'' }}  style="position: relative;top:4px"" name="handGrips" value="1"
@@ -3940,7 +3940,7 @@
                                     left</label>
                                     <div><label style="font-weight: 500">Other:</label> {{ $functionalAbl->upperOther }}</div>
                                 </div>
-            
+
                                 <p class="mb-0 mt-2" style="font-weight: 500">When standing does the patient appear to have:</p>
                                 <div><label>
                                     <input {{ $functionalAbl->exaggeratedForward?'checked':'' }} type="checkbox" name="exaggeratedForward" class="form-check-input">Exaggerated forward
@@ -3949,7 +3949,7 @@
                                 S shaped spine</label></div>
                                 <div><label><input {{ $functionalAbl->canTStand?'checked':'' }} type="checkbox" name="canTStand" class="form-check-input">N/A patient can't
                                 stand</label></div>
-            
+
                                 <div class="d-block mt-2">
                                     <span style="font-weight:500">Does the patient's posture limit their activities?</span>
                                     <label style="margin-left:10px"><input style="position: relative;top:4px" {{ $functionalAbl->dtppl===0?'checked':'' }} type="radio" value="0" name="dtppl" class="form-check-input">No</label>
@@ -4451,7 +4451,7 @@
                                         <td class="pt-0 align-top"><input style="position: relative;top:4px;" {{$healthCon->dayDayActivities===8 ? 'checked' : '' }} type="radio" class="form-check-input"> 8. <b>Unable to answer</b></td>
                                     </tr>
                                 </table>
-                                
+
                             </td>
                         </tr>
 
@@ -4673,7 +4673,7 @@
             </td>
         </tr>
     </table>
-    
+
     {{-- Skin Conditions --}}
     <div class="mt-0" style="border: 1px solid #000;padding-right:0.5pt;padding-bottom:0.5pt;">
         <table class="table table-borderless m-0">
@@ -4802,7 +4802,7 @@
                         </td>
                     </tr>
                 </table>
-    
+
                 <table class="table table-borderless m-0">
                     <tr>
                         <td>{{$skinCondition->unstageableb2}}</td>
@@ -4824,7 +4824,7 @@
                         </td>
                     </tr>
                 </table>
-    
+
                 <table class="table table-borderless m-0">
                     <tr>
                         <td>{{$skinCondition->unstageablec2}}</td>
@@ -4846,7 +4846,7 @@
                         </td>
                     </tr>
                 </table>
-    
+
                 <table class="table table-borderless m-0">
                     <tr>
                         <td>{{$skinCondition->unstageabled2}}</td>
@@ -4868,7 +4868,7 @@
                         </td>
                     </tr>
                 </table>
-    
+
                 <table class="table table-borderless m-0">
                     <tr>
                         <td>{{$skinCondition->unstageablee2}}</td>
@@ -4890,7 +4890,7 @@
                         </td>
                     </tr>
                 </table>
-       
+
                 <table class="table table-borderless m-0">
                     <tr>
                         <td>{{$skinCondition->unstageablef2Injury}}</td>
@@ -5269,7 +5269,7 @@
                     <div><input {{$specialTrmnt->radiation===1 ? 'checked': ''}} type="checkbox" name="radiation" value="1" class="form-check-input"> <b>B1. Radiation</b></div>
                 </td>
             </tr>
-            
+
             {{-- Respiratory Therapies --}}
             <tr>
                 <td class="bg-secondary-subtle" colspan="2">
@@ -5456,7 +5456,7 @@
                    &nbsp; &nbsp;<span><input style="position: relative;top:4px;" {{$specialTrmnt->includeDates===1 ? 'checked': ''}} type="radio" class="form-check-input"> 1. <b>Yes</b></span>
                 </td>
              </tr>
-                  
+
              {{-- M1046 --}}
              <tr>
                 <td class="bg-secondary-subtle" colspan="2">
@@ -5566,7 +5566,7 @@
                     &nbsp; <label><input {{ $specialTrmnt->cottonTipped ? 'checked' : '' }} type="checkbox" value="1" name="cottonTipped" class="form-check-input"> Cotton tipped applicators</label>
                     &nbsp; <label><input {{ $specialTrmnt->drainSponges ? 'checked' : '' }} type="checkbox" value="1" name="drainSponges" class="form-check-input"> Drain sponges</label>
                     &nbsp; <label><input {{ $specialTrmnt->hydrocolloids ? 'checked' : '' }} type="checkbox" value="1" name="hydrocolloids" class="form-check-input"> Hydrocolloids</label><br>
-                   <label><input {{ $specialTrmnt->kerlixSize ? 'checked' : '' }} type="checkbox" name="kerlixSize" value="1" class="form-check-input"> Kerlix size</label> {{ $specialTrmnt->kerlixSizeVal }} 
+                   <label><input {{ $specialTrmnt->kerlixSize ? 'checked' : '' }} type="checkbox" name="kerlixSize" value="1" class="form-check-input"> Kerlix size</label> {{ $specialTrmnt->kerlixSizeVal }}
                     &nbsp; <label><input {{ $specialTrmnt->nuGauze ? 'checked' : '' }} type="checkbox" value="1" name="" class="form-check-input"> Nu-gauze</label>
                     &nbsp; <label><input {{ $specialTrmnt->saline ? 'checked' : '' }} type="checkbox" value="1" name="saline" class="form-check-input"> Saline</label>
                     &nbsp; <label><input {{ $specialTrmnt->tape ? 'checked' : '' }} type="checkbox" value="1" name="tape" class="form-check-input"> Таре</label>
@@ -5660,7 +5660,7 @@
             <tr>
                 <td colspan="2">
                     <div><b>SUPPLIES/EQUIPMENT:</b></div>
-                    
+
                     <label><input {{ $specialTrmnt->augmentative ? 'checked' : '' }} type="checkbox" value="1" name="augmentative" class="form-check-input">Augmentative and alternative communication device(s) (type)</label> <u>{!! $specialTrmnt->augmentativeNote !!}</u>
                     &nbsp; <label><input {{ $specialTrmnt->bathBench ? 'checked' : '' }} type="checkbox" value="1" name="bathBench" class="form-check-input">Bath bench</label>
                     &nbsp; <label><input {{ $specialTrmnt->brace ? 'checked' : '' }} type="checkbox" value="1" name="brace" class="form-check-input">Brace</label>
@@ -5932,7 +5932,7 @@
             <td><b>Primary Diagnosis:</b> {{$physicianOrder->primaryDiagnosis}}</td>
             <td><b>ICD9:</b> {{$physicianOrder->icd9}}</td>
         </tr>
-    
+
         <tr>
             <td><b>Other Diagnosis:</b> {{$physicianOrder->otherDiagnosis1}}</td>
             <td><b>ICD10:</b> {{$physicianOrder->icd101}}</td>
@@ -5953,7 +5953,7 @@
             <td>{{$physicianOrder->otherDiagnosis5}}</td>
             <td><b>ICD10:</b> {{$physicianOrder->icd105}}</td>
         </tr>
-    
+
         <tr>
             <td><b>New Medication Date:</b> {{$physicianOrder->newMedicationDate}}</td>
             <td><b>Old Medications and Start Date:</b> {{$physicianOrder->oldMedicationsDate}}</td>
@@ -5961,7 +5961,7 @@
         <tr>
             <td colspan="2"><b>Change in Medications and Date:</b> {{$physicianOrder->changeMedicationDate}}</td>
         </tr>
-    
+
         <tr>
             <td colspan="2">
                 <b>M.D.:</b> {{$physicianOrder->mdSignature}}
@@ -5969,7 +5969,7 @@
                 {{$physicianOrder->mdSignatureDate}}
             </td>
         </tr>
-    
+
         <tr>
             <td colspan="2">
                 <b>Nurse's Signature:</b> {{$physicianOrder->nurseSignature}}
@@ -5997,7 +5997,7 @@
            </td>
            <td>Medical Record No. {{$cms->medicalRecordNo}}</td>
         </tr>
-     
+
         <tr>
            <td>
               Patients Name and Address<br>
@@ -6016,7 +6016,7 @@
            <td>Date of Birth: {{$cms->dateOfBirth}}</td>
            <td>Phone Number: {{$cms->phone}}</td>
         </tr>
-     
+
         <tr>
            <td colspan="2">Patient Risk Profile<br>{!! $cms->riskProfile !!}</td>
         </tr>
@@ -6079,43 +6079,43 @@
                             Mental Status<br>{{ $cms->mentalStatus }}
                         </td>
                      </tr>
-                  
+
                      <tr>
                         <td colspan="3">
                             DME and Supplies<br>{{ $cms->supplies }}
                         </td>
                      </tr>
-                  
+
                      <tr>
                         <td colspan="3">
                             Prognosis<br>{{ $cms->prognosis }}
                         </td>
                      </tr>
-                  
+
                      <tr>
                         <td colspan="3">
                             Safety Measures<br>{{ $cms->safety }}
                         </td>
                      </tr>
-                  
+
                      <tr>
                         <td colspan="3">
                             Nutritional Requirements<br>{{ $cms->nutritional }}
                         </td>
                      </tr>
-                  
+
                      <tr>
                         <td colspan="3">
                             Functional Limitations<br>{{ $cms->limitations }}
                         </td>
                      </tr>
-                  
+
                      <tr>
                         <td colspan="3">
                             Other<br>{{ $cms->other }}
                         </td>
                      </tr>
-                  
+
                      <tr>
                         <td colspan="3">
                             Activities Permitted<br>{{ $cms->activities }}

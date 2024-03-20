@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('patient_id')->nullable();
             $table->unsignedBigInteger('schedule_id')->nullable();
-            $table->integer('dopca')->nullable();
+            $table->string('dopca')->nullable();
             $table->string('assessment_month')->nullable();
             $table->string('assessment_day')->nullable();
             $table->string('assessment_year')->nullable();

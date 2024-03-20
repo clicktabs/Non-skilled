@@ -1,11 +1,11 @@
 <div class="px-[15px] bg-white {{isset($active) && $active=='first'?'active':''}}" id="teb-one">
-	<div class="vt p-2">@include('layouts.company_info')</div>
+	<div class="p-2">@include('layouts.company_info')</div>
 <div class="container-fluid">
 <div class="form-holder pt-4 pb-5">
 <form action="{{route('skilled-agency.saveNursing')}}" method="POST" id="nursing-visit-form">
 @csrf
-<div class=" vt row g-3 align-items-center justify-content-end pb-4">
-	<div class="vt col-auto">
+<div class=" row g-3 align-items-center justify-content-end pb-4">
+	<div class="col-auto">
 		<div class="row g-3 align-items-center">
 			<div class="col-auto">
 				<label for="visit_date" class="col-form-label">Visit Date & Time</label>
@@ -45,7 +45,7 @@
 <div class="row row-flex align-items-center mt-2">
 
 
-		<div class="border border-2 rounded bg-white p-2 mt-2 vt">
+		<div class="border border-2 rounded bg-white p-2 mt-2">
 			<div class="col-lg-auto">
 					<div class="col-lg-auto pt-2"><h4>TYPE OF VISIT:</h4></div>
 				<div class="row row-flex align-items-center">

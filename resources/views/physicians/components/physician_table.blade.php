@@ -105,7 +105,7 @@
                 </td>
                 <td class="dx">
                     <a href="{{ route('physician.show', encrypt($physician->id)) }}" class="btn ho xi ye">Edit</a>
-                    <a href="{{ route('physician.show', encrypt($physician->id)) }}" class="btn ho xi ye">Delete</a>
+                    <a href="{{ route('physician.show', encrypt($physician->id)) }}" class="btn ho xi ye">Show</a>
                 </td>
             </tr>
             @endforeach

@@ -293,7 +293,7 @@ public function uploadSignature(Request $request)
                     $signatureModel->signature = 'signatures/'. $filename;
                     $signatureModel->pin = $pin;
                     $signatureModel->save();
-                    return response()->json(['success' => 'Signature saved successfully!']);
+                    return response()->json(['success' => 'Signature saved successfully!', 'signatureUrl' => $signatureModel->signature]);
                 } else {
                     return response()->json(['danger' => 'Password not currect!']);
                 }

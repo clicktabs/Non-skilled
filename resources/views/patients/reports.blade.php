@@ -21,7 +21,7 @@
                 <div class="p-2">
                     <table class="table table-borderless">
                         <tbody>
-                            <tr> 
+                            <tr>
                                 <td>
                                     <select class="form-select" aria-label="Location select">
                                         <option value="">Select Location</option>
@@ -30,13 +30,14 @@
                                         <option value="" selected>Location 3</option>
                                         <option value="">Location 4</option> --}}
                                     </select>
-                                </td> 
+                                </td>
                                 <td style="max-width: 200px">
                                     <select class="form-select" aria-label="Location select" id="switch_table_data">
                                         <option value="">Select Report Item</option>
                                         {{-- <option value="Patient Roster">Patient Roster</option> --}}
                                         <option value="Patient Emergency Contact">Patient Emergency Contact List</option>
                                         <option value="Patient physician List">Patient physician List</option>
+                                        <option value="Physician List">Physician List</option>
                                         <option value="Patient Start of Care List">Patient Start of Care List</option>
                                         <option value="Patient Internal Case Manager">Patient Internal Case Manager</option>
                                         <option value="Patient External Case Manager">Patient External Case Manager</option>
@@ -44,35 +45,35 @@
                                         <option value="Survey Census">Survey Census</option>
                                         <option value="Drug Interaction">Drug Interaction</option>
                                         <option value="Plan of Care History">Plan of Care History</option>
-                                        <option value="Patient Discharge List">Patient Discharge List</option> 
-                                        <option value="Patient Infection List">Patient Infection List</option> 
-                                        <option value="Physician Order History by Patient">Physician Order History by Patient</option> 
+                                        <option value="Patient Discharge List">Patient Discharge List</option>
+                                        <option value="Patient Infection List">Patient Infection List</option>
+                                        <option value="Physician Order History by Patient">Physician Order History by Patient</option>
                                         <option value="Employee Roster">Employee Roster</option>
-                                        <option value="Expiring Documents">Expiring Documents</option>  
-                                        <option value="Scheduled">Scheduled</option>  
-                                        <option value="Started">Started</option> 
-                                        <option value="Open Shift">Open Shift</option>  
-                                        <option value="Missed Visit">Missed Visit</option>    
-                                        <option value="On Hold">On Hold</option>  
-                                        <option value="Hospitalized">Hospitalized</option>  
-                                        <option value="Completed">Completed</option>  
-                                        <option value="HHA Supervisory Visit">HHA Supervisory Visit</option>    
-                                        <option value="LPN/LVN Supervisory Visit">LPN/LVN Supervisory Visit</option>  
-                                        <option value="Oasis-E-Recertification">Oasis-E-Recertification</option>    
-                                        <option value=""></option>    
-                                       {{--  <option value=""></option>  
-                                        <option value=""></option> 
-                                        <option value=""></option>    
-                                        <option value=""></option>  
-                                        <option value=""></option> 
-                                        <option value=""></option>    
-                                        <option value=""></option>  
-                                        <option value=""></option> 
-                                        <option value=""></option>    
-                                        <option value=""></option>  
-                                        <option value=""></option> 
-                                        <option value=""></option>    
-                                        <option value=""></option>  
+                                        <option value="Expiring Documents">Expiring Documents</option>
+                                        <option value="Scheduled">Scheduled</option>
+                                        <option value="Started">Started</option>
+                                        <option value="Open Shift">Open Shift</option>
+                                        <option value="Missed Visit">Missed Visit</option>
+                                        <option value="On Hold">On Hold</option>
+                                        <option value="Hospitalized">Hospitalized</option>
+                                        <option value="Completed">Completed</option>
+                                        <option value="HHA Supervisory Visit">HHA Supervisory Visit</option>
+                                        <option value="LPN/LVN Supervisory Visit">LPN/LVN Supervisory Visit</option>
+                                        <option value="Oasis-E-Recertification">Oasis-E-Recertification</option>
+                                        <option value=""></option>
+                                       {{--  <option value=""></option>
+                                        <option value=""></option>
+                                        <option value=""></option>
+                                        <option value=""></option>
+                                        <option value=""></option>
+                                        <option value=""></option>
+                                        <option value=""></option>
+                                        <option value=""></option>
+                                        <option value=""></option>
+                                        <option value=""></option>
+                                        <option value=""></option>
+                                        <option value=""></option>
+                                        <option value=""></option>
                                         <option value=""></option>                         --}}
                                     </select>
                                 </td>
@@ -120,14 +121,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    
+
                 </tbody>
             </table>
 
             {{-- Patient Roster Form --}}
             <form action="{{route('patient.roster.print')}}" method="POST" id="PatientRosterForm" style="display: none;" target="_blank">
                 @csrf
-            
+
                 <table id="PatientRosterTable" class="table table-striped" style="width:100%;">
                     <thead>
                         <tr>
@@ -140,7 +141,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
+
                     </tbody>
                 </table>
                 <input type="hidden" class="report-type" name="reportType" value="">
@@ -149,7 +150,7 @@
             {{-- Employee Roster Form --}}
             <form action="{{route('employee.roster.print')}}" method="POST" id="EmployeeRosterForm" style="display: none;" target="_blank">
                 @csrf
-            
+
                 <table id="EmployeeRosterTable" class="table table-striped" style="width:100%;">
                     <thead>
                         <tr>
@@ -161,7 +162,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
+
                     </tbody>
                 </table>
                 <input type="hidden" class="report-type" name="reportType" value="">
@@ -170,7 +171,7 @@
             {{-- Patient Emergency Contact List --}}
             <form action="{{route('patient-emergency-contact.print')}}" method="POST" id="PatientEmergencyContactForm" style="display: none;" target="_blank">
                 @csrf
-            
+
                 <table id="PatientEmergencyContactTable" class="table table-striped" style="width:100%;">
                     <thead>
                         <tr>
@@ -183,7 +184,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
+
                     </tbody>
                 </table>
                 <input type="hidden" class="report-type" name="reportType" value="">
@@ -192,7 +193,7 @@
             {{-- Patient physician List --}}
             <form action="{{route('patients.physician.print')}}" method="POST" id="PatientphysicianListForm" style="display: none;" target="_blank">
                 @csrf
-            
+
                 <table id="PatientphysicianListTable" class="table table-striped" style="width:100%;">
                     <thead>
                         <tr>
@@ -205,7 +206,28 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
+
+                    </tbody>
+                </table>
+                <input type="hidden" class="report-type" name="reportType" value="">
+            </form>
+
+            {{-- Physician List --}}
+            <form action="{{route('physician.print')}}" method="POST" id="PhysicianListForm" style="display: none;" target="_blank">
+                @csrf
+
+                <table id="PhysicianListTable" class="table table-striped" style="width:100%;">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Physician Name</th>
+                            <th>Physician NPI</th>
+                            <th>Physician Address</th>
+                            <th>Physician Phone Number</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
                     </tbody>
                 </table>
                 <input type="hidden" class="report-type" name="reportType" value="">
@@ -214,7 +236,7 @@
             {{--Patient Start of Care List  --}}
             <form action="{{route('patients.startofcare.print')}}" method="POST" id="PatientStartofCareListForm" style="display: none;" target="_blank">
                 @csrf
-            
+
                 <table id="PatientStartofCareListTable" class="table table-striped" style="width:100%;">
                     <thead>
                         <tr>
@@ -228,7 +250,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
+
                     </tbody>
                 </table>
                 <input type="hidden" class="report-type" name="reportType" value="">
@@ -237,7 +259,7 @@
             {{--Patient Internal Case Manager List  --}}
             <form action="" method="POST" id="InternalCaseManager" style="display: none;" target="_blank">
                 @csrf
-            
+
                 <table id="InternalCaseManagerTable" class="table table-striped" style="width:100%;">
                     <thead>
                         <tr>
@@ -249,7 +271,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
+
                     </tbody>
                 </table>
                 <input type="hidden" class="report-type" name="reportType" value="">
@@ -258,7 +280,7 @@
             {{--Patient External Case Manager List  --}}
             <form action="" method="POST" id="ExternalCaseManager" style="display: none;" target="_blank">
                 @csrf
-            
+
                 <table id="ExternalCaseManagerTable" class="table table-striped" style="width:100%;">
                     <thead>
                         <tr>
@@ -270,7 +292,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
+
                     </tbody>
                 </table>
                 <input type="hidden" class="report-type" name="reportType" value="">
@@ -279,7 +301,7 @@
             {{--Patient Authorisation --}}
             <form action="" method="POST" id="PatientAuthorisation" style="display: none;" target="_blank">
                 @csrf
-            
+
                 <table id="PatientAuthorisationTable" class="table table-striped" style="width:100%;">
                     <thead>
                         <tr>
@@ -292,7 +314,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
+
                     </tbody>
                 </table>
                 <input type="hidden" class="report-type" name="reportType" value="">
@@ -301,7 +323,7 @@
             {{--Patient Authorisation --}}
             <form action="" method="POST" id="SurveyCensus" style="display: none;" target="_blank">
                 @csrf
-            
+
                 <table id="SurveyCensusTable" class="table table-striped" style="width:100%;">
                     <thead>
                         <tr>
@@ -315,7 +337,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
+
                     </tbody>
                 </table>
                 <input type="hidden" class="report-type" name="reportType" value="">
@@ -324,7 +346,7 @@
             {{--Drug Interaction --}}
             <form action="" method="POST" id="DrugInteractionForm" style="display: none;" target="_blank">
                 @csrf
-            
+
                 <table id="DrugInteractionTable" class="table table-striped" style="width:100%;">
                     <thead>
                         <tr>
@@ -338,7 +360,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
+
                     </tbody>
                 </table>
                 <input type="hidden" class="report-type" name="reportType" value="">
@@ -347,7 +369,7 @@
             {{--Plan of Care History --}}
             <form action="{{route('patients.plan-of-care.print')}}" method="POST" id="PlanofCareHistoryForm" style="display: none;" target="_blank">
                 @csrf
-            
+
                 <table id="PlanofCareHistoryTable" class="table table-striped" style="width:100%;">
                     <thead>
                         <tr>
@@ -361,7 +383,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
+
                     </tbody>
                 </table>
                 <input type="hidden" class="report-type" name="reportType" value="">
@@ -370,7 +392,7 @@
             {{--Patient 60 day Summary--}}
             <form action="" method="POST" id="PatientSummary" style="display: none;" target="_blank">
                 @csrf
-            
+
                 <table id="PatientSummaryTable" class="table table-striped" style="width:100%;">
                     <thead>
                         <tr>
@@ -383,7 +405,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
+
                     </tbody>
                 </table>
                 <input type="hidden" class="report-type" name="reportType" value="">
@@ -392,7 +414,7 @@
             {{--Patient Orders History --}}
             <form action="" method="POST" id="PatientOrdersHistory " style="display: none;" target="_blank">
                 @csrf
-            
+
                 <table id="PatientOrdersHistoryTable" class="table table-striped" style="width:100%;">
                     <thead>
                         <tr>
@@ -405,7 +427,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
+
                     </tbody>
                 </table>
                 <input type="hidden" class="report-type" name="reportType" value="">
@@ -414,7 +436,7 @@
             {{--Patient Discharge List  --}}
             <form action="{{route('patients.discharge-list.print')}}" method="POST" id="PatientDischargeListForm" style="display: none;" target="_blank">
                 @csrf
-            
+
                 <table id="PatientDischargeListTable" class="table table-striped" style="width:100%;">
                     <thead>
                         <tr>
@@ -430,7 +452,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
+
                     </tbody>
                 </table>
                 <input type="hidden" class="report-type" name="reportType" value="">
@@ -439,7 +461,7 @@
             {{--Patient Infection List   --}}
             <form action="{{route('patients.infection-list.print')}}" method="POST" id="PatientInfectionListForm" style="display: none;" target="_blank">
                 @csrf
-            
+
                 <table id="PatientInfectionListTable" class="table table-striped" style="width:100%;">
                     <thead>
                         <tr>
@@ -455,7 +477,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
+
                     </tbody>
                 </table>
                 <input type="hidden" class="report-type" name="reportType" value="">
@@ -479,12 +501,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
+
                     </tbody>
                 </table>
                 <input type="hidden" class="report-type" name="reportType" value="">
             </form>
-        
+
             {{--Scheduled --}}
             <form action="" method="POST" id="ScheduledForm" style="display: none;" target="_blank">
                 @csrf
@@ -503,7 +525,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
+
                     </tbody>
                 </table>
                 <input type="hidden" class="report-type" name="reportType" value="">
@@ -512,7 +534,7 @@
             {{--Started --}}
             <form action="" method="POST" id="started" style="display: none;" target="_blank">
                 @csrf
-        
+
                 <table id="startedTable" class="table table-striped" style="width:100%;">
                     <thead>
                         <tr>
@@ -526,7 +548,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
+
                     </tbody>
                 </table>
                 <input type="hidden" class="report-type" name="reportType" value="">
@@ -549,7 +571,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
+
                     </tbody>
                 </table>
                 <input type="hidden" class="report-type" name="reportType" value="">
@@ -571,29 +593,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
-                    </tbody>
-                </table>
-                <input type="hidden" class="report-type" name="reportType" value="">
-            </form>   
 
-            {{--On Hold --}}
-            <form action="" method="POST" id="onhold" style="display: none;" target="_blank">
-                @csrf
-                <table id="onholdTable" class="table table-striped" style="width:100%;">
-                    <thead>
-                        <tr>
-                            <th>Patient Name</th>
-                            <th>MRN#</th>
-                            <th>DOB</th>
-                            <th>Insurance</th>
-                            <th>Address</th>
-                            <th>Phone Number</th>
-                            <th>Employee Name</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        
                     </tbody>
                 </table>
                 <input type="hidden" class="report-type" name="reportType" value="">
@@ -615,11 +615,33 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
+
                     </tbody>
                 </table>
                 <input type="hidden" class="report-type" name="reportType" value="">
-            </form>    
+            </form>
+
+            {{--On Hold --}}
+            <form action="" method="POST" id="onhold" style="display: none;" target="_blank">
+                @csrf
+                <table id="onholdTable" class="table table-striped" style="width:100%;">
+                    <thead>
+                        <tr>
+                            <th>Patient Name</th>
+                            <th>MRN#</th>
+                            <th>DOB</th>
+                            <th>Insurance</th>
+                            <th>Address</th>
+                            <th>Phone Number</th>
+                            <th>Employee Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+                <input type="hidden" class="report-type" name="reportType" value="">
+            </form>
 
             {{--Hospitalized --}}
             <form action="" method="POST" id="hospitalized " style="display: none;" target="_blank">
@@ -637,11 +659,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
+
                     </tbody>
                 </table>
                 <input type="hidden" class="report-type" name="reportType" value="">
-            </form> 
+            </form>
 
             {{--Hospitalized --}}
             <form action="" method="POST" id="completed" style="display: none;" target="_blank">
@@ -746,14 +768,14 @@
 
     <script type="text/javascript">
     $(function () {
-    
+
         var start_date = moment().subtract(1, 'M');
         var end_date = moment();
         var dateRange = start_date.format('MM/DD/YYYY') + ' - ' + end_date.format('MM/DD/YYYY');
-    
+
         let startDate = '', endDate = '';
         $('#daterange span').html(dateRange);
-    
+
         $('#daterange').daterangepicker(function(start_date, end_date){
             $('#daterange span').html(dateRange);
         });
@@ -763,7 +785,7 @@
 
             table.draw();
         });
-    
+
         var table = $('#daterange_table').DataTable({
             processing : true,
             serverSide : true,
@@ -809,7 +831,7 @@
             var row = table.row( tr );
 
             console.log(row.child);
-        
+
             if ( row.child.isShown() ) {
                 // This row is already open - close it
                 row.child.hide();
@@ -821,8 +843,8 @@
                 tr.addClass('shown');
             }
         } );
-    
-        /* 
+
+        /*
          * Swith Table Data from Report type selection
         */
 
@@ -854,7 +876,7 @@
         }
 
         // Employee Roster
-        function employeeRosterTable() {    
+        function employeeRosterTable() {
             $('#EmployeeRosterTable').show().DataTable({
                 processing : true,
                 serverSide : true,
@@ -873,7 +895,7 @@
         }
 
         // Patient Emergency Contact List
-        function patientEmergencyContact() {    
+        function patientEmergencyContact() {
             $('#PatientEmergencyContactTable').show().DataTable({
                 processing : true,
                 serverSide : true,
@@ -904,6 +926,25 @@
                 columns : [
                     {data : 'id', name : 'id'},
                     {data : 'patient', name : 'patient'},
+                    {data : 'name', name : 'name', className: "details-control"},
+                    {data : 'npi', name : 'npi'},
+                    {data : 'address', name : 'address'},
+                    {data : 'phone', name : 'phone'},
+                ]
+            });
+        }
+
+        // Physician List
+        function physicianList() {
+            $('#PhysicianListTable').show().DataTable({
+                processing : true,
+                serverSide : true,
+                destroy: true,
+                ajax : {
+                    url : "{{ route('physician.ajax') }}",
+                },
+                columns : [
+                    {data : 'id', name : 'id'},
                     {data : 'name', name : 'name', className: "details-control"},
                     {data : 'npi', name : 'npi'},
                     {data : 'address', name : 'address'},
@@ -1024,7 +1065,7 @@
 
             // Show the form
             $('#'+formId).show();
-            
+
             switch(getType) {
                 case 'Patient Roster':
                     patientRosterTable();
@@ -1038,9 +1079,13 @@
                 case 'Patient Emergency Contact':
                     patientEmergencyContact();
                     break;
-                
+
                 case 'Patient physician List':
                     patientPhysicianList();
+                    break;
+
+                case 'Physician List':
+                    physicianList();
                     break;
 
                 case 'Patient Start of Care List':
@@ -1058,7 +1103,7 @@
                 case 'Patient Infection List':
                     patientInfectionList();
                     break;
-                    
+
                 default:
                     table.draw();
             }
@@ -1077,8 +1122,8 @@
             if( ids.length === 0 ) {
                 e.preventDefault();
             }
-            
-        }); 
+
+        });
     });
     </script>
 @endsection
